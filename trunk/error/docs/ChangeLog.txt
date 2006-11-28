@@ -1,4 +1,17 @@
--= oglib_error-2.1-1.ogp =-
+-= oglib_error-2.3-1.ogp =-
+
+
+
+Changes from 2.2-1 --> 2.3-1
+--------------------------------
+2006-11-27 
+[MOD] "Error Codes Ring Constant" is now placed with Numeric
+      display visible.
+
+Changes from 2.2-1 --> 2.3-1
+--------------------------------
+2005-10-19
+[NEW] Added Error palette menu to the OpenG root-level menu
 
 
 Changes from 2.0-1 --> 2.1-1
