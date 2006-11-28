@@ -4,7 +4,8 @@
 
 Changes from 2.2-1 --> 2.3-1
 --------------------------------
-2006-11-27 
+2006-11-27
+[MOD] Changed from LGPL to BSD license.
 [MOD] "Error Codes Ring Constant" is now placed with Numeric
       display visible.
 
