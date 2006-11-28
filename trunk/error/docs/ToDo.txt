@@ -1,0 +1,2 @@
+* Add documentation build (see dictionary package)
+* Add examples
