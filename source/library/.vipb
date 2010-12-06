@@ -1,11 +1,11 @@
-<VI_Package_Builder_Settings Version="0.3" Created_Date="2010-12-03 22:23:20" Modified_Date="2010-12-06 18:40:18" Creator="Jonathon Green" Comments="" ID="8eb61524444a6e0dc950f303ef355604">
+<VI_Package_Builder_Settings Version="0.3" Created_Date="2010-12-03 22:23:20" Modified_Date="2010-12-06 19:32:17" Creator="Jonathon Green" Comments="" ID="ff18695dfceab799a5d5564a58a52b7f">
   <Library_General_Settings>
     <Package_File_Name>oglib_error</Package_File_Name>
-    <Library_Version>4.0.0.4</Library_Version>
+    <Library_Version>4.0.0.5</Library_Version>
     <Auto_Increment_Version>false</Auto_Increment_Version>
     <Library_Source_Folder>.</Library_Source_Folder>
-    <Library_Output_Folder>..</Library_Output_Folder>
-    <Company_Name/>
+    <Library_Output_Folder>..\..</Library_Output_Folder>
+    <Company_Name>OpenG.org</Company_Name>
     <Library_Summary/>
     <Library_License>BSD</Library_License>
     <Package_LabVIEW_Version>9.0</Package_LabVIEW_Version>
