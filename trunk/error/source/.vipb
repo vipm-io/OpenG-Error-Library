@@ -1,11 +1,11 @@
-<VI_Package_Builder_Settings Version="0.3" Created_Date="2010-12-03 22:23:20" Modified_Date="2010-12-06 19:32:17" Creator="Jonathon Green" Comments="" ID="ff18695dfceab799a5d5564a58a52b7f">
+<VI_Package_Builder_Settings Version="0.3" Created_Date="2010-12-03 22:23:20" Modified_Date="2010-12-09 21:39:04" Creator="Jonathon Green" Comments="" ID="8d24fa6a771e7e8e1a8462bc26b987d7">
   <Library_General_Settings>
     <Package_File_Name>oglib_error</Package_File_Name>
-    <Library_Version>4.0.0.5</Library_Version>
+    <Library_Version>4.0.0.8</Library_Version>
     <Auto_Increment_Version>false</Auto_Increment_Version>
     <Library_Source_Folder>.</Library_Source_Folder>
-    <Library_Output_Folder>..\..</Library_Output_Folder>
-    <Company_Name>OpenG.org</Company_Name>
+    <Library_Output_Folder>..</Library_Output_Folder>
+    <Company_Name/>
     <Library_Summary/>
     <Library_License>BSD</Library_License>
     <Package_LabVIEW_Version>9.0</Package_LabVIEW_Version>
@@ -19,7 +19,7 @@
       <Additional_External_Dependencies>ogrsc_dynamicpalette &gt;=0.19</Additional_External_Dependencies>
     </Package_Dependencies>
     <Custom_Action_VIs>
-      <Pre-Build_VI>..\..\build support\Pre-Build VI - Run Unit Tests.vi</Pre-Build_VI>
+      <Pre-Build_VI>..\build support\Pre-Build VI - Run Unit Tests.vi</Pre-Build_VI>
       <Post-Build_VI/>
       <Pre-Install_VI/>
       <Post-Install_VI/>
@@ -46,7 +46,7 @@ Package build with VIPM 2010
       <Examples>
         <LLB>false</LLB>
         <Preserve_Hierarchy>true</Preserve_Hierarchy>
-        <Path/>
+        <Path>&lt;application&gt;\examples\OpenG\error</Path>
       </Examples>
       <Custom_Probes>
         <LLB>false</LLB>
@@ -89,6 +89,30 @@ Package build with VIPM 2010
         <Additional_Destination>false</Additional_Destination>
         <Additional_Destination_Index>0</Additional_Destination_Index>
       </Destination_Overrides>
+      <Destination_Overrides>
+        <Path>library</Path>
+        <Destination>Toolkit VIs</Destination>
+        <Additional_Destination>false</Additional_Destination>
+        <Additional_Destination_Index>0</Additional_Destination_Index>
+      </Destination_Overrides>
+      <Destination_Overrides>
+        <Path>library</Path>
+        <Destination>Toolkit VIs</Destination>
+        <Additional_Destination>false</Additional_Destination>
+        <Additional_Destination_Index>0</Additional_Destination_Index>
+      </Destination_Overrides>
+      <Destination_Overrides>
+        <Path>library</Path>
+        <Destination>Toolkit VIs</Destination>
+        <Additional_Destination>false</Additional_Destination>
+        <Additional_Destination_Index>0</Additional_Destination_Index>
+      </Destination_Overrides>
+      <Destination_Overrides>
+        <Path>examples</Path>
+        <Destination>Examples</Destination>
+        <Additional_Destination>false</Additional_Destination>
+        <Additional_Destination_Index>0</Additional_Destination_Index>
+      </Destination_Overrides>
       <Password_Overrides>
         <Path>.</Path>
         <Password/>
@@ -96,10 +120,26 @@ Package build with VIPM 2010
       <Namespace_Overrides>
         <Path>.</Path>
         <Namespace_Type>Suffix</Namespace_Type>
+        <Namespace/>
+      </Namespace_Overrides>
+      <Namespace_Overrides>
+        <Path>examples</Path>
+        <Namespace_Type>Suffix</Namespace_Type>
         <Namespace>__ogtk</Namespace>
       </Namespace_Overrides>
+      <Namespace_Overrides>
+        <Path>library</Path>
+        <Namespace_Type>Suffix</Namespace_Type>
+        <Namespace>__ogtk</Namespace>
+      </Namespace_Overrides>
+      <Exclusions>
+        <Path>images</Path>
+      </Exclusions>
+      <Exclusions>
+        <Path>user docs</Path>
+      </Exclusions>
     </Source_Files>
-    <License_Agreement_Filepath>..\..\docs\License Agreement.txt</License_Agreement_Filepath>
+    <License_Agreement_Filepath>user docs\License Agreement.txt</License_Agreement_Filepath>
     <Licensing_and_Activation>
       <License_LF_file_path/>
       <Licensed_library_file_path/>
@@ -169,7 +209,7 @@ Package build with VIPM 2010
           <Column>1</Column>
         </Position>
         <Icon>00000000</Icon>
-        <Path>Build Error Cluster.vi</Path>
+        <Path>library\Build Error Cluster.vi</Path>
       </Items_Data>
       <Items_Data>
         <Type>Item</Type>
@@ -182,7 +222,7 @@ Package build with VIPM 2010
           <Column>2</Column>
         </Position>
         <Icon>00000000</Icon>
-        <Path>Error Codes Ring Constant.vi</Path>
+        <Path>library\Error Codes Ring Constant.vi</Path>
       </Items_Data>
       <Items_Data>
         <Type>Item</Type>
@@ -195,7 +235,7 @@ Package build with VIPM 2010
           <Column>4</Column>
         </Position>
         <Icon>00000000</Icon>
-        <Path>Case (Error IO).vi</Path>
+        <Path>library\Case (Error IO).vi</Path>
       </Items_Data>
     </Functions_Palette_Data>
   </Library_Palette_Definition>
