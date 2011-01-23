@@ -1,6 +1,6 @@
 OpenG Error Tools
 
-2002 Jean-Pierre Drolet, Jim Kring, 2010 Jonathon Green
+2002 Jean-Pierre Drolet, Jim Kring; 2010 Jonathon Green
 
 All rights reserved.
 
