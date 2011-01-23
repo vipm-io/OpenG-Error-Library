@@ -1,4 +1,4 @@
-<VI_Package_Builder_Settings Version="0.3" Created_Date="2010-12-03 22:23:20" Modified_Date="2010-12-11 17:37:29" Creator="Jonathon Green" Comments="" ID="58895f35c9d0b4cf7bd6713751456530">
+<VI_Package_Builder_Settings Version="0.3" Created_Date="2010-12-03 22:23:20" Modified_Date="2011-01-23 19:05:11" Creator="Jonathon Green" Comments="" ID="bdb3f568eb50cfca8204055b34803715">
   <Library_General_Settings>
     <Package_File_Name>oglib_error</Package_File_Name>
     <Library_Version>4.0.0.10</Library_Version>
@@ -28,8 +28,8 @@
     <Description>
       <One_Line_Description_Summary>OpenG Error Tools</One_Line_Description_Summary>
       <Description>The error package contains several routines related to error handling.</Description>
-      <Copyright>2002 Jean-Pierre Drolet, Jim Kring, 2010 Jonathon Green</Copyright>
-      <Packager>OpenG</Packager>
+      <Copyright>2002 Jean-Pierre Drolet, Jim Kring; 2010 Jonathon Green</Copyright>
+      <Packager>OpenG.org</Packager>
       <URL>http://wiki.openg.org/Oglib_error</URL>
       <Release_Notes>Package sources upgraded to LabVIEW 2009 (package now compatible with LV2009 or greater).
 Package build with VIPM 2010
