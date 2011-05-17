@@ -1,6 +1,6 @@
-OpenG Error Tools
+OpenG Error Library
 
-2002 Jean-Pierre Drolet, Jim Kring; 2010 Jonathon Green
+Copyright (c) 2002 Jean-Pierre Drolet, Jim Kring; 2010-2011 Jonathon Green
 
 All rights reserved.
 
