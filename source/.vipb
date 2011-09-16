@@ -1,7 +1,7 @@
-<VI_Package_Builder_Settings Version="0.3" Created_Date="2010-12-03 22:23:20" Modified_Date="2011-05-17 16:12:43" Creator="Jonathon Green" Comments="" ID="d5972f9cdbe950bbe36c13c6877dfbd4">
+<VI_Package_Builder_Settings Version="0.3" Created_Date="2010-12-03 22:23:20" Modified_Date="2011-09-16 14:37:28" Creator="Jonathon Green" Comments="" ID="3db4b5bbc8e281b697032754032ab9be">
   <Library_General_Settings>
     <Package_File_Name>oglib_error</Package_File_Name>
-    <Library_Version>4.0.0.13</Library_Version>
+    <Library_Version>4.1.0.14</Library_Version>
     <Auto_Increment_Version>false</Auto_Increment_Version>
     <Library_Source_Folder>.</Library_Source_Folder>
     <Library_Output_Folder>..</Library_Output_Folder>
@@ -31,9 +31,7 @@
       <Copyright>Copyright (c) 2002 Jean-Pierre Drolet, Jim Kring; 2010-2011 Jonathon Green</Copyright>
       <Packager>OpenG.org</Packager>
       <URL>http://wiki.openg.org/Oglib_error</URL>
-      <Release_Notes>Package sources upgraded to LabVIEW 2009 (package now compatible with LV2009 or greater).
-Package build with VIPM 2010
-[FIX] 2468528 - OpenG Error toolkit should use brown as color instead of pink</Release_Notes>
+      <Release_Notes>[FIX] 3410309 - Add Error Constant to Palette</Release_Notes>
     </Description>
     <Destinations>
       <Toolkit_VIs>
@@ -232,6 +230,19 @@ Package build with VIPM 2010
         </Position>
         <Icon>00000000</Icon>
         <Path>library\Case (Error IO).vi</Path>
+      </Items_Data>
+      <Items_Data>
+        <Type>Item</Type>
+        <Sub_Palette_Index>-1</Sub_Palette_Index>
+        <NameSub_Menu_Name>Error Constant.vi</NameSub_Menu_Name>
+        <Short_Name>Error Constant</Short_Name>
+        <is_Merge_VI>true</is_Merge_VI>
+        <Position>
+          <Row>1</Row>
+          <Column>3</Column>
+        </Position>
+        <Icon>00000000</Icon>
+        <Path>library\Error Constant.vi</Path>
       </Items_Data>
     </Functions_Palette_Data>
   </Library_Palette_Definition>
