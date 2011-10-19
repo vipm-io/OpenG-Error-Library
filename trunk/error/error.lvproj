@@ -25,9 +25,16 @@
 			</Item>
 			<Item Name="install scripts" Type="Folder"/>
 			<Item Name="library" Type="Folder">
+				<Item Name="Filter Error Codes" Type="Folder">
+					<Item Name="Filter Error Codes (Array).vi" Type="VI" URL="../source/library/Filter Error Codes/Filter Error Codes (Array).vi"/>
+					<Item Name="Filter Error Codes (Scalar).vi" Type="VI" URL="../source/library/Filter Error Codes/Filter Error Codes (Scalar).vi"/>
+					<Item Name="Filtered Error Details - Cluster.ctl" Type="VI" URL="../source/library/Filter Error Codes/Filtered Error Details - Cluster.ctl"/>
+				</Item>
 				<Item Name="Build Error Cluster.vi" Type="VI" URL="../source/library/Build Error Cluster.vi"/>
 				<Item Name="Case (Error IO).vi" Type="VI" URL="../source/library/Case (Error IO).vi"/>
+				<Item Name="Clear All Errors.vi" Type="VI" URL="../source/library/Clear All Errors.vi"/>
 				<Item Name="Error Codes Ring Constant.vi" Type="VI" URL="../source/library/Error Codes Ring Constant.vi"/>
+				<Item Name="Filter Error Codes.vi" Type="VI" URL="../source/library/Filter Error Codes.vi"/>
 				<Item Name="VI Tree - error.vi" Type="VI" URL="../source/library/VI Tree - error.vi"/>
 			</Item>
 			<Item Name="user docs" Type="Folder">
@@ -38,6 +45,8 @@
 		</Item>
 		<Item Name="tests" Type="Folder">
 			<Item Name="TEST - Build Error Cluster.vi" Type="VI" URL="../tests/TEST - Build Error Cluster.vi"/>
+			<Item Name="TEST - Clear All Errors.vi" Type="VI" URL="../tests/TEST - Clear All Errors.vi"/>
+			<Item Name="TEST - Filter Error Codes.vi" Type="VI" URL="../tests/TEST - Filter Error Codes.vi"/>
 			<Item Name="TEST - TEMPLATE_SCALAR.vit" Type="VI" URL="../tests/TEST - TEMPLATE_SCALAR.vit"/>
 			<Item Name="TEST - TEMPLATE_VECTOR.vit" Type="VI" URL="../tests/TEST - TEMPLATE_VECTOR.vit"/>
 		</Item>
@@ -285,6 +294,7 @@
 				<Item Name="Merge Errors.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Merge Errors.vi"/>
 			</Item>
 			<Item Name="Slice String.vi" Type="VI" URL="../source/library/Slice String.vi"/>
+			<Item Name="Error Constant.vi" Type="VI" URL="../source/library/Error Constant.vi"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build"/>
 	</Item>
