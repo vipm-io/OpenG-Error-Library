@@ -1,6 +1,6 @@
 OpenG Error Library
 
-Copyright (c) 2002 Jean-Pierre Drolet; Jim Kring; 2010-2011 Jonathon Green; 2011 Ed Dickens
+Copyright (c) 2002 Jean-Pierre Drolet; Jim Kring; 2010-2011 Jonathon Green; 2011 Ed Dickens; 2011 JKI; 2011 François Normandin
 
 All rights reserved.
 
