@@ -1,7 +1,7 @@
-<VI_Package_Builder_Settings Version="0.3" Created_Date="2010-12-03 22:23:20" Modified_Date="2011-10-20 01:37:00" Creator="Jonathon Green" Comments="" ID="bcce080c99ceb2039e427ff13b3e8eb1">
+<VI_Package_Builder_Settings Version="0.3" Created_Date="2010-12-03 22:23:20" Modified_Date="2011-10-20 07:56:50" Creator="Jonathon Green" Comments="" ID="a14f6b4fbd5dee15e1fa15bc9707260a">
   <Library_General_Settings>
     <Package_File_Name>oglib_error</Package_File_Name>
-    <Library_Version>4.2.0.19</Library_Version>
+    <Library_Version>4.2.0.24</Library_Version>
     <Auto_Increment_Version>false</Auto_Increment_Version>
     <Library_Source_Folder>.</Library_Source_Folder>
     <Library_Output_Folder>..</Library_Output_Folder>
@@ -28,7 +28,7 @@
     <Description>
       <One_Line_Description_Summary>OpenG Error Library</One_Line_Description_Summary>
       <Description>The OpenG Error Library package contains several routines related to error handling.</Description>
-      <Copyright>Copyright (c) 2002 Jean-Pierre Drolet; Jim Kring; 2010-2011 Jonathon Green; 2011 Ed Dickens</Copyright>
+      <Copyright>Copyright (c) 2002 Jean-Pierre Drolet; Jim Kring; 2010-2011 Jonathon Green; 2011 Ed Dickens; 2011 JKI; 2011 François Normandin</Copyright>
       <Packager>OpenG.org</Packager>
       <URL>http://wiki.openg.org/Oglib_error</URL>
       <Release_Notes>[NEW] 3426051 - Add new 'Filter Error Codes" API</Release_Notes>
