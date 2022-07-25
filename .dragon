@@ -1,0 +1,9 @@
+{
+  "name":"OpenG Error Library",
+  "labview-version":"2020",
+  "labview-bitness":"any",
+  "lv-venv":"",
+  "main-project":"error.lvproj",
+  "main-vipc":"source/.vipc",
+  "main-vipb":"source/.vipb"
+}
