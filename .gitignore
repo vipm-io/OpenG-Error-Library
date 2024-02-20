@@ -8,3 +8,6 @@
 
 # Built VI Packages
 *.vip
+
+# Unit test report
+/*report.xml
