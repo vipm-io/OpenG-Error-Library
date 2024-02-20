@@ -9,4 +9,4 @@ vipc = 'source\.vipc'
 [vipm.dependencies]
 oglib_array = "4.1.1.14"
 oglib_file = "4.0.1.22"
-jki_lib_caraya = "1.2.1.131"
+jki_lib_caraya = "1.4.3.147"
