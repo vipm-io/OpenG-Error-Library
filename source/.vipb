@@ -1,4 +1,4 @@
-<VI_Package_Builder_Settings Version="2018" Created_Date="2010-12-03 22:23:20" Modified_Date="2024-02-20 12:27:20" Creator="Jonathon Green" Comments="" ID="8384469ddd0435ac42bbed35d9f13c53">
+<VI_Package_Builder_Settings Version="2018" Created_Date="2010-12-03 22:23:20" Modified_Date="2024-02-20 14:59:51" Creator="Jonathon Green" Comments="" ID="1d9fa6661fe49bef673a0d2b99496def">
   <Library_General_Settings>
     <Package_File_Name>oglib_error</Package_File_Name>
     <Library_Version>6.0.0.26</Library_Version>
@@ -29,11 +29,16 @@
     <Description>
       <One_Line_Description_Summary>OpenG Error Library</One_Line_Description_Summary>
       <Description>The OpenG Error Library package contains several routines related to error handling.</Description>
-      <Copyright>Copyright (c) 2002 Jean-Pierre Drolet; Jim Kring; 2010-2011 Jonathon Green; 2011 Ed Dickens; 2011 JKI; 2011 François Normandin</Copyright>
+      <Copyright>Copyright (c) 2002-2024 Project Contributors (See CONTRIBUTORS.md)</Copyright>
       <Packager>VIPM Community</Packager>
       <URL>https://github.com/vipm-io/OpenG-Error-Library/</URL>
       <Release_Notes>- Requires LabVIEW 2020 or greater
-- [...add more...]</Release_Notes>
+- Moved library VIs into Library (openg_error.lvlib) #7
+- Upgraded source code to LV2020 format #2
+- Marked all as Separate Compiled Code #3
+- Migrated unit tests to caraya #5
+
+Important: Callers of this package will relink automatically to the new Library (openg_variant.lvlib) that contains this package. However, if you subsequently downgrade this package to version 5.x or older, your callers will need to be manually relinked to the older version (without the Library namespace).</Release_Notes>
     </Description>
     <Destinations>
       <Toolkit_VIs>
@@ -316,7 +321,7 @@
         <Path>library\Clear All Errors.vi</Path>
         <VI_Title>Clear All Errors.vi</VI_Title>
       </Items_Data>
-      <GUID>10F68D454236036001DC1A6FA31624AB</GUID>
+      <GUID>AC463609E84EAF56A7370F576AE0349F</GUID>
     </Functions_Palette_Data>
   </Library_Palette_Definition>
 </VI_Package_Builder_Settings>
