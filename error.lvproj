@@ -38,6 +38,7 @@
 				<Item Name="Clear All Errors.vi" Type="VI" URL="../source/library/Clear All Errors.vi"/>
 				<Item Name="Error Codes Ring Constant.vi" Type="VI" URL="../source/library/Error Codes Ring Constant.vi"/>
 				<Item Name="Filter Error Codes.vi" Type="VI" URL="../source/library/Filter Error Codes.vi"/>
+				<Item Name="Error Constant.vi" Type="VI" URL="../source/library/Error Constant.vi"/>
 				<Item Name="VI Tree - error.vi" Type="VI" URL="../source/library/VI Tree - error.vi"/>
 			</Item>
 			<Item Name="user docs" Type="Folder">
@@ -666,7 +667,6 @@
 				<Item Name="Caraya Interactive Menu.rtm" Type="Document" URL="/&lt;vilib&gt;/addons/_JKI Toolkits/Caraya/menu/Caraya Interactive Menu.rtm"/>
 			</Item>
 			<Item Name="Slice String.vi" Type="VI" URL="../source/library/Slice String.vi"/>
-			<Item Name="Error Constant.vi" Type="VI" URL="../source/library/Error Constant.vi"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build"/>
 	</Item>
