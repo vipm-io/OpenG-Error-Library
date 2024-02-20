@@ -1,0 +1,7 @@
+
+# LabVIEW IDE Settings
+*.aliases
+*.lvlps
+
+# Dragon IDE Settings
+.dragon/
