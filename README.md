@@ -10,7 +10,7 @@ The OpenG Error Library package contains several routines related to error handl
 
 ### Functions Palette
 
-![OpenG Error Functions Palette](docs\functions_palette.png)
+![OpenG Error Functions Palette](docs/functions_palette.png)
 
 The OpenG Error Library provides a set of VIs that can be used to create and manipulate error clusters. The library includes VIs for creating error clusters, extracting error information, clearing errors, and more.
 
