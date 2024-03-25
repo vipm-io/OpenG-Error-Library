@@ -9,6 +9,17 @@
   "contributorsPerLine": 7,
   "contributors": [
     {
+
+      "login": "RolfKal",
+      "name": "Rolf Kalbermatter",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15158041?v=4",
+      "profile": "http://blog.kalbermatter.nl",
+      "contributions": [
+        "test",
+        "code"
+      ]
+    },
+    {
       "login": "tcplomp",
       "name": "tcplomp",
       "avatar_url": "https://avatars.githubusercontent.com/u/2871661?v=4",
@@ -44,5 +55,6 @@
       "contributions": [
         "code"
       ]
-  ]
+    }
+    ]
 }
