@@ -1,4 +1,21 @@
 {
   "projectName": "OpenG-Error-Library",
-  "projectOwner": "vipm-io"
+  "projectOwner": "vipm-io",
+  "files": [
+    "README.md"
+  ],
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributorsPerLine": 7,
+  "contributors": [
+    {
+      "login": "justingoeres",
+      "name": "Justin Goeres",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17071464?v=4",
+      "profile": "https://github.com/justingoeres",
+      "contributions": [
+        "code"
+      ]
+    }
+  ]
 }
