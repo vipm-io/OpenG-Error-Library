@@ -1,4 +1,22 @@
 {
   "projectName": "OpenG-Error-Library",
-  "projectOwner": "vipm-io"
+  "projectOwner": "vipm-io",
+  "files": [
+    "README.md"
+  ],
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributorsPerLine": 7,
+  "contributors": [
+    {
+      "login": "RolfKal",
+      "name": "Rolf Kalbermatter",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15158041?v=4",
+      "profile": "http://blog.kalbermatter.nl",
+      "contributions": [
+        "test",
+        "code"
+      ]
+    }
+  ]
 }
