@@ -22,6 +22,13 @@ Many of these VIs are similar to the error handling VIs that ship with LabVIEW, 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="http://blog.kalbermatter.nl"><img src="https://avatars.githubusercontent.com/u/15158041?v=4?s=100" width="100px;" alt="Rolf Kalbermatter"/><br /><sub><b>Rolf Kalbermatter</b></sub></a><br /><a href="#test-RolfKal" title="Tests">⚠️</a> <a href="#code-RolfKal" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
