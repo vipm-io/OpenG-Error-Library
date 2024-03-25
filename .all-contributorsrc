@@ -1,4 +1,22 @@
 {
   "projectName": "OpenG-Error-Library",
-  "projectOwner": "vipm-io"
+  "projectOwner": "vipm-io",
+  "files": [
+    "README.md"
+  ],
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributorsPerLine": 7,
+  "contributors": [
+    {
+      "login": "jg-code",
+      "name": "Jonathon Green",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16163577?v=4",
+      "profile": "http://www.jgcode.net",
+      "contributions": [
+        "code",
+        "maintenance"
+      ]
+    }
+  ]
 }
