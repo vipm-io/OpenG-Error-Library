@@ -6,3 +6,5 @@
 - Ed Dickens
 - JKI
 - François Normandin
+- Tom McQuillan
+- Steven Dusing
