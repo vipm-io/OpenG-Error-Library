@@ -48,3 +48,52 @@ jobs:
             --no-code \
             --breakpoints
           echo finished pylavi tests
+
+  Build:
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: nationalinstruments/labview:2025q3patch1-linux
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Cache VIPM packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            /usr/local/natinst/LabVIEW*/
+            /usr/local/jki/vipm/cache/
+            /usr/local/jki/vipm/db/
+          key: ${{ runner.os }}-vipm-${{ hashFiles('project.vipc') }}
+
+      - name: Install VIPM
+        run: |
+          wget https://packages.jki.net/vipm/preview/vipm_latest_preview_amd64.deb
+          sudo dpkg -i vipm.deb
+          rm vipm.deb
+
+      - name: Activate VIPM
+        run: |
+          vipm vipm-activate \
+            --serial-number "${{ secrets.VIPM_SERIAL_NUMBER }}" \
+            --name "${{ secrets.VIPM_FULL_NAME }}" \
+            --email "${{ secrets.VIPM_EMAIL }}"
+
+      - name: Refresh package list
+        run: vipm package-list-refresh
+
+      - name: Install project dependencies
+        run: vipm install --labview-version 2025 source/.vipc
+
+      - name: Build package
+        run: vipm build --labview-version 2025 source/.vipb
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: built-package
+          path: *.vip
+
