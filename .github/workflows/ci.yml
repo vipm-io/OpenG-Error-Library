@@ -96,6 +96,7 @@ jobs:
         timeout-minutes: 3
         run: |
           echo "Display: $DISPLAY"
+          echo "TMPDIR: $TMPDIR"
           export DISPLAY=99
           echo "Display: $DISPLAY"
           sleep 2s
