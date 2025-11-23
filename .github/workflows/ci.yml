@@ -95,24 +95,12 @@ jobs:
       - name: Activate VIPM
         timeout-minutes: 3
         run: |
-          echo "Display: $DISPLAY"
-          echo "TMPDIR: $TMPDIR"
           export DISPLAY=99
           echo "Display: $DISPLAY"
-          echo "jki.conf"
-          cat /etc/jki/jki.conf
-          sleep 2s
           vipm activate \
             --serial-number "${{ env.VIPM_SERIAL_NUMBER }}" \
             --name "${{ env.VIPM_FULL_NAME }}" \
-            --email "${{ env.VIPM_EMAIL }}" &
-          sleep 5s
-          ps -ef
-          sleep 10s
-          ps -ef
-          sleep 5
-          echo "/tmp"
-          ls -al /tmp/
+            --email "${{ env.VIPM_EMAIL }}"
 
       - name: Refresh package list
         run: vipm package-list-refresh
