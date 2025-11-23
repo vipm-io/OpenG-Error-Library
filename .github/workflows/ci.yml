@@ -59,7 +59,7 @@ jobs:
     steps:
       
       - name: Install prerequisites
-        run: sudo apt-get update && sudo apt-get install -y wget
+        run: apt-get update && apt-get install -y wget
       
       - name: Checkout code
         uses: actions/checkout@v4
@@ -76,7 +76,7 @@ jobs:
       - name: Install VIPM
         run: |
           wget -O vipm.deb https://packages.jki.net/vipm/preview/vipm_latest_preview_amd64.deb
-          sudo dpkg -i vipm.deb
+          dpkg -i vipm.deb
           rm vipm.deb
 
       - name: Activate VIPM
