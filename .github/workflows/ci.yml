@@ -71,7 +71,7 @@ jobs:
 
       - name: Install VIPM
         run: |
-          wget https://packages.jki.net/vipm/preview/vipm_latest_preview_amd64.deb
+          wget -O vipm.deb https://packages.jki.net/vipm/preview/vipm_latest_preview_amd64.deb
           sudo dpkg -i vipm.deb
           rm vipm.deb
 
@@ -95,5 +95,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: built-package
-          path: *.vip
+          path: |
+            *.vip
 
