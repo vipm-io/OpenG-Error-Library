@@ -92,8 +92,14 @@ jobs:
           vipm --version
 
       - name: Activate VIPM
+        timeout-minutes: 1
         run: |
-          vipm activate --serial-number "${{ env.VIPM_SERIAL_NUMBER }}" --name "${{ env.VIPM_FULL_NAME }}" --email "${{ env.VIPM_EMAIL }}"
+          vipm activate \
+            --serial-number "${{ env.VIPM_SERIAL_NUMBER }}" \
+            --name "${{ env.VIPM_FULL_NAME }}" \
+            --email "${{ env.VIPM_EMAIL }}" & \
+          sleep 5s
+          ps -al
 
       - name: Refresh package list
         run: vipm package-list-refresh
