@@ -92,7 +92,6 @@ jobs:
 
       - name: Activate VIPM
         run: |
-          /usr/local/natinst/LabVIEW-2025-64/labviewprofull &
           vipm activate --serial-number "${{ env.VIPM_SERIAL_NUMBER }}" --name "${{ env.VIPM_FULL_NAME }}" --email "${{ env.VIPM_EMAIL }}"
 
       - name: Refresh package list
