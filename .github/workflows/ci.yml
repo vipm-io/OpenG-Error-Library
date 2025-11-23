@@ -94,13 +94,17 @@ jobs:
       - name: Activate VIPM
         timeout-minutes: 1
         run: |
+          echo "Display: $DISPLAY"
+          DISPLAY=99
+          echo "Display: $DISPLAY"
+          sleep 2s
           vipm activate \
             --serial-number "${{ env.VIPM_SERIAL_NUMBER }}" \
             --name "${{ env.VIPM_FULL_NAME }}" \
             --email "${{ env.VIPM_EMAIL }}" & \
-          sleep 5s
+          sleep 2s
           ps aux
-          sleep 5s
+          sleep 2s
 
       - name: Refresh package list
         run: vipm package-list-refresh
