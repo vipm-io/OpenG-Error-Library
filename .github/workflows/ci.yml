@@ -56,6 +56,11 @@ jobs:
     container:
       image: nationalinstruments/labview:2025q3patch1-linux
 
+    env:
+      VIPM_SERIAL_NUMBER: ${{ secrets.VIPM_SERIAL_NUMBER }}
+      VIPM_FULL_NAME: ${{ secrets.VIPM_FULL_NAME }}
+      VIPM_EMAIL: ${{ secrets.VIPM_EMAIL }}
+
     steps:
       
       - name: Install prerequisites
@@ -81,10 +86,7 @@ jobs:
 
       - name: Activate VIPM
         run: |
-          vipm vipm-activate \
-            --serial-number "${{ secrets.VIPM_SERIAL_NUMBER }}" \
-            --name "${{ secrets.VIPM_FULL_NAME }}" \
-            --email "${{ secrets.VIPM_EMAIL }}"
+          vipm vipm-activate --serial-number "${{ env.VIPM_SERIAL_NUMBER }}" --name "${{ env.VIPM_FULL_NAME }}" --email "${{ env.VIPM_EMAIL }}"
 
       - name: Refresh package list
         run: vipm package-list-refresh
