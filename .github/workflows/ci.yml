@@ -103,7 +103,7 @@ jobs:
           cat /etc/jki/jki.conf
           sleep 2s
           vipm activate \
-            --serial-number "" \
+            --serial-number "${{ env.VIPM_SERIAL_NUMBER }}" \
             --name "${{ env.VIPM_FULL_NAME }}" \
             --email "${{ env.VIPM_EMAIL }}" &
           sleep 5s
