@@ -55,6 +55,7 @@ jobs:
 
     container:
       image: nationalinstruments/labview:2025q3patch1-linux
+      options: --user root
 
     env:
       VIPM_SERIAL_NUMBER: ${{ secrets.VIPM_SERIAL_NUMBER }}
