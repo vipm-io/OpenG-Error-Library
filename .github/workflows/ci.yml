@@ -63,27 +63,29 @@ jobs:
 
     steps:
       
-      - name: Install prerequisites
-        run: apt-get update && apt-get install -y wget
-      
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Cache VIPM packages
-        uses: actions/cache@v4
-        with:
-          path: |
-            /usr/local/natinst/LabVIEW*/
-            /usr/local/jki/vipm/cache/
-            /usr/local/jki/vipm/db/
-          key: ${{ runner.os }}-vipm-${{ hashFiles('project.vipc') }}
+      # - name: Cache VIPM packages
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: |
+      #       /usr/local/natinst/LabVIEW*/
+      #       /usr/local/jki/vipm/cache/
+      #       /usr/local/jki/vipm/db/
+      #     key: ${{ runner.os }}-vipm-${{ hashFiles('project.vipc') }}
 
       - name: Install VIPM
         run: |
-          wget -O vipm.deb https://packages.jki.net/vipm/preview/vipm_latest_preview_amd64.deb
-          dpkg -i vipm.deb
-          rm vipm.deb
-          vipm --version
+          apt-get update \
+            && apt-get install -y wget \
+            && rm -rf /var/lib/apt/lists/*
+          mkdir -p /usr/local/jki/vipm /etc/jki \
+            && touch /usr/local/jki/vipm/Settings.ini /etc/jki/jki.conf
+          wget -O /tmp/vipm.deb \
+            https://packages.jki.net/vipm/preview/vipm_latest_preview_amd64.deb \
+            && dpkg -i /tmp/vipm.deb \
+            && rm /tmp/vipm.deb
 
       - name: Activate VIPM
         run: |
