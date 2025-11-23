@@ -93,7 +93,7 @@ jobs:
           vipm --version
 
       - name: Activate VIPM
-        timeout-minutes: 1
+        timeout-minutes: 3
         run: |
           echo "Display: $DISPLAY"
           export DISPLAY=99
