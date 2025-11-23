@@ -63,6 +63,7 @@ jobs:
       VIPM_SERIAL_NUMBER: ${{ secrets.VIPM_SERIAL_NUMBER }}
       VIPM_FULL_NAME: ${{ secrets.VIPM_FULL_NAME }}
       VIPM_EMAIL: ${{ secrets.VIPM_EMAIL }}
+      Display: 99
 
     steps:
       
@@ -101,10 +102,7 @@ jobs:
           vipm activate \
             --serial-number "${{ env.VIPM_SERIAL_NUMBER }}" \
             --name "${{ env.VIPM_FULL_NAME }}" \
-            --email "${{ env.VIPM_EMAIL }}" & \
-          sleep 2s
-          ps aux
-          sleep 2s
+            --email "${{ env.VIPM_EMAIL }}"
 
       - name: Refresh package list
         run: vipm package-list-refresh
