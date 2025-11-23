@@ -96,11 +96,11 @@ jobs:
         timeout-minutes: 1
         run: |
           echo "Display: $DISPLAY"
-          DISPLAY=99
+          export DISPLAY=99
           echo "Display: $DISPLAY"
           sleep 2s
           vipm activate \
-            --serial-number "${{ env.VIPM_SERIAL_NUMBER }}" \
+            --serial-number "" \
             --name "${{ env.VIPM_FULL_NAME }}" \
             --email "${{ env.VIPM_EMAIL }}"
 
