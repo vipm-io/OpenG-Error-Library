@@ -99,7 +99,8 @@ jobs:
             --name "${{ env.VIPM_FULL_NAME }}" \
             --email "${{ env.VIPM_EMAIL }}" & \
           sleep 5s
-          ps -al
+          ps aux
+          sleep 5s
 
       - name: Refresh package list
         run: vipm package-list-refresh
