@@ -55,7 +55,7 @@ jobs:
 
     container:
       image: nationalinstruments/labview:2025q3patch1-linux
-      options: --user root --privileged
+      options: --user root --privileged --cpus 2 --memory 16g
       
 
     env:
