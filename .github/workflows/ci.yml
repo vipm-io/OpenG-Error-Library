@@ -70,6 +70,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        with:
+          sudo: false
+
       # - name: Cache VIPM packages
       #   uses: actions/cache@v4
       #   with:
