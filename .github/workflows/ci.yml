@@ -114,7 +114,7 @@ jobs:
       #     sudo: false
 
       - name: Activate VIPM
-        timeout-minutes: 5
+        timeout-minutes: 10
         run: |
           echo "Activating VIPM..."; \
           vipm activate \
