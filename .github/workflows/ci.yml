@@ -129,6 +129,14 @@ jobs:
             --email "$VIPM_EMAIL"
           echo "Refreshing VIPM package list..."
           vipm package-list-refresh
+          echo "Searching for oglib_boolean package..."
+          vipm search oglib_boolean
+          echo "Listing available VIPM LabVIEW versions..."
+          vipm labview-list
+          echo "Listing VIPM targets..."
+          vipm target-list
+          echo "Checking current VIPM target..."
+          vipm target
           echo "Installing oglib_boolean package..."
           vipm install oglib_boolean
           echo "Listing installed VIPM packages..."
