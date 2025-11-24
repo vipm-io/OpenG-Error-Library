@@ -101,9 +101,16 @@ jobs:
           echo "Mass Compile After Package Install?=\"FALSE\"" >> /usr/local/jki/vipm/Settings.ini
           echo "IsFirstLaunch=\"FALSE\"" >> /usr/local/jki/vipm/Settings.ini
 
+      - name: Setup LabVIEW Settings
+        run: |
+          echo "server.tcp.access=\"+127.0.0.1:+localhost:+*\"" >> /root/natinst/.config/LabVIEW-2025/labview.conf
+          echo "server.tcp.access=\"+127.0.0.1:+localhost:+*\"" >> /root/natinst/.config/LabVIEW-2025/labview64.conf
+          echo "server.tcp.access=\"+127.0.0.1:+localhost:+*\"" >> /root/natinst/.config/LabVIEW-2025/labviewprofull.conf
+
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
         with:
+          detach: true
           sudo: false
 
       - name: Activate VIPM
@@ -112,18 +119,27 @@ jobs:
           export DISPLAY=99
           echo "Display: $DISPLAY"
           vipm activate \
-            --serial-number "${{ env.VIPM_SERIAL_NUMBER }}" \
-            --name "${{ env.VIPM_FULL_NAME }}" \
-            --email "${{ env.VIPM_EMAIL }}"
+            --serial-number "$VIPM_SERIAL_NUMBER" \
+            --name "$VIPM_FULL_NAME" \
+            --email "$VIPM_EMAIL" & \
+          sleep 10; \
+          pkill -f "vipm"; \
+          vipm activate \
+            --serial-number "$VIPM_SERIAL_NUMBER" \
+            --name "$VIPM_FULL_NAME" \
+            --email "$VIPM_EMAIL"
+          vipm package-list-refresh
+          vipm install oglib_boolean
+          vipm list --installed
 
-      - name: Refresh package list
-        run: vipm package-list-refresh
+      # - name: Refresh package list
+      #   run: vipm package-list-refresh
 
-      - name: Install project dependencies
-        run: vipm install --labview-version 2025 source/.vipc
+      # - name: Install project dependencies
+      #   run: vipm install --labview-version 2025 source/.vipc
 
-      - name: Build package
-        run: vipm build --labview-version 2025 source/.vipb
+      # - name: Build package
+      #   run: vipm build --labview-version 2025 source/.vipb
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
