@@ -70,11 +70,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        with:
-          sudo: false
-
       # - name: Cache VIPM packages
       #   uses: actions/cache@v4
       #   with:
@@ -96,6 +91,20 @@ jobs:
             && dpkg -i /tmp/vipm.deb \
             && rm /tmp/vipm.deb
           vipm --version
+
+      - name: Setup VIPM Settings
+        run: |
+          echo "[General]" > /usr/local/jki/vipm/Settings.ini
+          echo "check for updates on startup?=\"FALSE\"" >> /usr/local/jki/vipm/Settings.ini
+          echo "Check new ver. of App. on startup?=\"FALSE\"" >> /usr/local/jki/vipm/Settings.ini
+          echo "Suppress Download warning?=\"TRUE\"" >> /usr/local/jki/vipm/Settings.ini
+          echo "Mass Compile After Package Install?=\"FALSE\"" >> /usr/local/jki/vipm/Settings.ini
+          echo "IsFirstLaunch=\"FALSE\"" >> /usr/local/jki/vipm/Settings.ini
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        with:
+          sudo: false
 
       - name: Activate VIPM
         timeout-minutes: 3
