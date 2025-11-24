@@ -74,9 +74,9 @@ jobs:
       #   uses: actions/cache@v4
       #   with:
       #     path: |
-      #       /usr/local/natinst/LabVIEW*/
       #       /usr/local/jki/vipm/cache/
-      #       /usr/local/jki/vipm/db/
+      #     # /usr/local/jki/vipm/db/
+      #     # /usr/local/natinst/LabVIEW*/
       #     key: ${{ runner.os }}-vipm-${{ hashFiles('project.vipc') }}
 
       - name: Install VIPM
@@ -107,17 +107,16 @@ jobs:
           echo "server.tcp.access=\"+127.0.0.1:+localhost:+*\"" >> /root/natinst/.config/LabVIEW-2025/labview64.conf
           echo "server.tcp.access=\"+127.0.0.1:+localhost:+*\"" >> /root/natinst/.config/LabVIEW-2025/labviewprofull.conf
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        with:
-          detach: true
-          sudo: false
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
+      #   with:
+      #     detach: true
+      #     sudo: false
 
       - name: Activate VIPM
         timeout-minutes: 3
         run: |
-          export DISPLAY=99
-          echo "Display: $DISPLAY"
+          echo "Activating VIPM..."; \
           vipm activate \
             --serial-number "$VIPM_SERIAL_NUMBER" \
             --name "$VIPM_FULL_NAME" \
@@ -128,8 +127,11 @@ jobs:
             --serial-number "$VIPM_SERIAL_NUMBER" \
             --name "$VIPM_FULL_NAME" \
             --email "$VIPM_EMAIL"
+          echo "Refreshing VIPM package list..."
           vipm package-list-refresh
+          echo "Installing oglib_boolean package..."
           vipm install oglib_boolean
+          echo "Listing installed VIPM packages..."
           vipm list --installed
 
       # - name: Refresh package list
