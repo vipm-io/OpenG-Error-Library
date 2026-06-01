@@ -35,7 +35,7 @@ jobs:
       - name: Install VIPM
         run: |
           apt-get update \
-            && apt-get install -y wget \
+            && apt-get install -y wget git \
             && rm -rf /var/lib/apt/lists/*
           wget -O /tmp/vipm.deb \
             https://packages.jki.net/vipm/${VIPM_RELEASE_TYPE}/vipm_${VIPM_VERSION}_amd64.deb \
