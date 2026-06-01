@@ -21,7 +21,7 @@ jobs:
     env:
       VIPM_RELEASE_TYPE: preview
       VIPM_VERSION: 26.3.0-3859
-      # VIPM_COMMUNITY_EDITION: true
+      VIPM_COMMUNITY_EDITION: true
 
     steps:
 
@@ -42,6 +42,9 @@ jobs:
             && dpkg -i /tmp/vipm.deb \
             && rm /tmp/vipm.deb
           vipm --version
+
+      - name: Check Git Status
+        run: git status
 
       - name: Print VIPM About
         run: vipm about
