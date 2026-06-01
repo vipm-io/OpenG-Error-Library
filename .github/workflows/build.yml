@@ -26,7 +26,10 @@ jobs:
     steps:
 
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+
+      - name: Check Git Status
+        run: git status
 
       # wget is required to download VIPM, and is not included in the base LabVIEW image.
       - name: Install VIPM
