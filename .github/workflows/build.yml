@@ -107,7 +107,7 @@ jobs:
 
       - name: VIPM Build Package
         # vipc file is empty
-        if: false
+        if: true
         run: |
           TARGET_DISPLAY=:99
           export DISPLAY="$TARGET_DISPLAY"
