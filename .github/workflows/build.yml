@@ -63,6 +63,8 @@ jobs:
         run: vipm about
 
       - name: VIPM Refresh Package Index
+        # we will refresh before building the package
+        if: false
         run: |
           TARGET_DISPLAY=:99
           export DISPLAY="$TARGET_DISPLAY"
@@ -84,6 +86,8 @@ jobs:
         run: vipm list source/.vipc
 
       - name: VIPM Install Packages
+        # vipc file is empty
+        if: false
         run: |
           TARGET_DISPLAY=:99
           export DISPLAY="$TARGET_DISPLAY"
@@ -100,3 +104,24 @@ jobs:
           /usr/local/natinst/LabVIEW-2026-64/labviewprofull &
 
           vipm install source/.vipc --show-progress --verbose
+
+      - name: VIPM Build Package
+        # vipc file is empty
+        if: false
+        run: |
+          TARGET_DISPLAY=:99
+          export DISPLAY="$TARGET_DISPLAY"
+          # Start Xvfb if it is not already running. If it is already running, assume it is correctly configured for this container and do nothing.
+          if ! pgrep -x Xvfb > /dev/null; then
+              Xvfb "$TARGET_DISPLAY" -screen 0 1280x720x24 -ac +extension GLX +render -noreset \
+                  > /tmp/xvfb.log 2>&1 &
+          fi
+          # Writing this marker file is critical and if if it is not present, the LabVIEW Runtime Engine (required by vipm) may not start properly.
+          mkdir -p /tmp/natinst && echo "1" > /tmp/natinst/LVContainer.txt
+          # Start Xvfb before the LabVIEW Runtime Engine initializes, which happens on the first `vipm` command.
+          echo "$(pgrep -x Xvfb > /dev/null && echo "Xvfb running (DISPLAY=$TARGET_DISPLAY)" || echo "WARNING: Xvfb is required by vipm, but failed to start; DISPLAY=$DISPLAY may not work. Check /tmp/xvfb.log for details.")"
+          echo "Starting LabVIEW"
+          /usr/local/natinst/LabVIEW-2026-64/labviewprofull &
+
+          vipm refresh --show-progress --verbose
+          vipm build source/.vipb --labview-version 2026 --labview-bitness 64 --show-progress --verbose
