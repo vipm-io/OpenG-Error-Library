@@ -12,7 +12,7 @@ jobs:
 
   Build:
 
-    runs-on: ubuntu-latest-4-cores
+    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
@@ -69,4 +69,16 @@ jobs:
         run: vipm list source/.vipc
 
       - name: VIPM Install Packages
-        run: vipm install source/.vipc --show-progress --verbose
+        run: |
+          if ! pgrep -x Xvfb > /dev/null; then
+            Xvfb "$TARGET_DISPLAY" -screen 0 1280x720x24 -ac +extension GLX +render -noreset \
+            > /tmp/xvfb.log 2>&1 &
+          fi
+          mkdir -p /tmp/natinst
+          echo "1" > /tmp/natinst/LVContainer.txt
+          echo "X11 ready: DISPLAY=$DISPLAY (Xvfb log: /tmp/xvfb.log)"
+
+          # /usr/local/natinst/LabVIEW-2026-64/labviewprofull &
+
+          echo "Installing VIPM packages from source/.vipc..."
+          vipm install source/.vipc --show-progress --verbose
