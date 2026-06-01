@@ -28,7 +28,7 @@ jobs:
     env:
       VIPM_RELEASE_TYPE: preview
       VIPM_VERSION: 26.3.0-3859
-      VIPM_COMMUNITY_EDITION: true
+      # VIPM_COMMUNITY_EDITION: true
 
     steps:
 
