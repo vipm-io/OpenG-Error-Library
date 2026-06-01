@@ -14,8 +14,15 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        LABVIEW_CONTAINER:
+          - 2026q1-linux
+          # - 2025q3patch1-linux
+
     container:
-      image: nationalinstruments/labview:2026q1-linux
+      image: nationalinstruments/labview:${{ matrix.LABVIEW_CONTAINER }}
       options: --user root
 
     env:
@@ -27,9 +34,6 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v6
-
-      - name: Check Git Status
-        run: git status
 
       # wget is required to download VIPM, and is not included in the base LabVIEW image.
       - name: Install VIPM
