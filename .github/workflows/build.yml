@@ -39,7 +39,7 @@ jobs:
       - name: Install VIPM
         run: |
           apt-get update \
-            && apt-get install -y wget \
+            && apt-get install -y wget git \
             && rm -rf /var/lib/apt/lists/*
           wget -O /tmp/vipm.deb \
             https://packages.jki.net/vipm/${VIPM_RELEASE_TYPE}/vipm_${VIPM_VERSION}_amd64.deb \
@@ -63,22 +63,17 @@ jobs:
         run: vipm about
 
       - name: VIPM Refresh Package Index
-        run: vipm refresh --show-progress --verbose
+        run: |
+            Xvfb "$TARGET_DISPLAY" -screen 0 1280x720x24 -ac +extension GLX +render -noreset > /tmp/xvfb.log 2>&1 &
+            mkdir -p /tmp/natinst
+            echo "1" > /tmp/natinst/LVContainer.txt
+            echo "X11 ready: DISPLAY=$DISPLAY (Xvfb log: /tmp/xvfb.log)"
+            /usr/local/natinst/LabVIEW-2026-64/labviewprofull &
+            vipm refresh --show-progress --verbose
 
       - name: VIPM List Packages
         run: vipm list source/.vipc
 
       - name: VIPM Install Packages
         run: |
-          if ! pgrep -x Xvfb > /dev/null; then
-            Xvfb "$TARGET_DISPLAY" -screen 0 1280x720x24 -ac +extension GLX +render -noreset \
-            > /tmp/xvfb.log 2>&1 &
-          fi
-          mkdir -p /tmp/natinst
-          echo "1" > /tmp/natinst/LVContainer.txt
-          echo "X11 ready: DISPLAY=$DISPLAY (Xvfb log: /tmp/xvfb.log)"
-
-          # /usr/local/natinst/LabVIEW-2026-64/labviewprofull &
-
-          echo "Installing VIPM packages from source/.vipc..."
           vipm install source/.vipc --show-progress --verbose
