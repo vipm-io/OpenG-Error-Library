@@ -47,8 +47,8 @@ jobs:
             && rm /tmp/vipm.deb
           vipm --version
 
-      - name: Check Git Status
-        run: git status
+      # - name: Check Git Status
+      #   run: git status
 
       - name: Print VIPM About
         run: vipm about
