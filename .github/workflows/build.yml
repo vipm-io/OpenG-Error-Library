@@ -1,0 +1,53 @@
+name: build-package
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+
+  Build:
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: nationalinstruments/labview:2026q1-linux
+      options: --user root
+
+    env:
+      VIPM_RELEASE_TYPE: preview
+      VIPM_VERSION: 26.3.0-3859
+      VIPM_COMMUNITY_EDITION: true
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # wget is required to download VIPM, and is not included in the base LabVIEW image.
+      - name: Install VIPM
+        run: |
+          apt-get update \
+            && apt-get install -y wget \
+            && rm -rf /var/lib/apt/lists/*
+          wget -O /tmp/vipm.deb \
+            https://packages.jki.net/vipm/${VIPM_RELEASE_TYPE}/vipm_${VIPM_VERSION}_amd64.deb \
+            && dpkg -i /tmp/vipm.deb \
+            && rm /tmp/vipm.deb
+          vipm --version
+
+      - name: Print VIPM About
+        run: vipm about
+
+      - name: VIPM Refresh Package Index
+        run: vipm refresh
+
+      - name: VIPM List Packages
+        run: vipm list source/.vipc
+
+      - name: VIPM Install Packages
+        run: vipm install source/.vipc
