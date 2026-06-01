@@ -64,12 +64,14 @@ jobs:
 
       - name: VIPM Refresh Package Index
         run: |
-            Xvfb "$TARGET_DISPLAY" -screen 0 1280x720x24 -ac +extension GLX +render -noreset > /tmp/xvfb.log 2>&1 &
-            mkdir -p /tmp/natinst
-            echo "1" > /tmp/natinst/LVContainer.txt
-            echo "X11 ready: DISPLAY=$DISPLAY (Xvfb log: /tmp/xvfb.log)"
-            /usr/local/natinst/LabVIEW-2026-64/labviewprofull &
-            vipm refresh --show-progress --verbose
+          TARGET_DISPLAY=:99
+          export DISPLAY="$TARGET_DISPLAY"
+          Xvfb "$TARGET_DISPLAY" -screen 0 1280x720x24 -ac +extension GLX +render -noreset > /tmp/xvfb.log 2>&1 &
+          mkdir -p /tmp/natinst
+          echo "1" > /tmp/natinst/LVContainer.txt
+          echo "X11 ready: DISPLAY=$DISPLAY (Xvfb log: /tmp/xvfb.log)"
+          /usr/local/natinst/LabVIEW-2026-64/labviewprofull &
+          vipm refresh --show-progress --verbose
 
       - name: VIPM List Packages
         run: vipm list source/.vipc
