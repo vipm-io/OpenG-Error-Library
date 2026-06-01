@@ -54,10 +54,10 @@ jobs:
         run: vipm about
 
       - name: VIPM Refresh Package Index
-        run: vipm refresh
+        run: vipm refresh --show-progress --verbose
 
       - name: VIPM List Packages
         run: vipm list source/.vipc
 
       - name: VIPM Install Packages
-        run: vipm install source/.vipc
+        run: vipm install source/.vipc --show-progress --verbose
