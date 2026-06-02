@@ -10,7 +10,7 @@ on:
 
 jobs:
 
-  Build:
+  Build-Linux:
 
     runs-on: ubuntu-latest
 
@@ -169,6 +169,61 @@ jobs:
           vipm refresh --show-progress --verbose
           vipm build source/.vipb --labview-version ${LABVIEW_VERSION_YEAR} --labview-bitness 64 --show-progress --verbose
 
+
+      - name: Upload Built Package as Artifact
+        if: true
+        uses: actions/upload-artifact@v7
+        with:
+          name: vi-package-${{ matrix.LABVIEW_IMAGE }}
+          path: |
+            *.vip
+
+  Build-Windows:
+
+    runs-on: windows-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        LABVIEW_IMAGE:
+          - 2026q1patch2-windows
+
+    # The official LabVIEW container image from NI
+    container:
+      image: nationalinstruments/labview:${{ matrix.LABVIEW_IMAGE }}
+
+    env:
+      VIPM_RELEASE_TYPE: preview
+      VIPM_VERSION: 26.3.3859
+      VIPM_COMMUNITY_EDITION: true
+
+    steps:
+
+      - name: Setup Variables
+        shell: bash
+        run: |
+          # Derive LabVIEW version year from the container image tag
+          LABVIEW_IMAGE="${{ matrix.LABVIEW_IMAGE }}" # e.g. "2026q1-windows"
+          LABVIEW_VERSION_YEAR="${LABVIEW_IMAGE:0:4}" # e.g. "2026" from "2026q1-windows"
+          echo "LABVIEW_VERSION_YEAR=${LABVIEW_VERSION_YEAR}" >> "$GITHUB_ENV"
+
+      - name: Install VIPM
+        shell: cmd
+        run: |
+          curl.exe -L https://packages.jki.net/vipm/preview/vipm-%VIPM_VERSION%-windows-setup.exe -o %TEMP%\vipm-setup.exe
+          start /wait %TEMP%\vipm-setup.exe /quiet /norestart
+          del %TEMP%\vipm-setup.exe
+          vipm about
+
+      - name: Checkout code                                                                                                   
+        uses: actions/checkout@v6
+
+      - name: VIPM Install Packages and Build
+        if: true
+        run: |
+          vipm refresh --show-progress --verbose
+          vipm install error.dragon --show-progress --verbose --labview-version ${LABVIEW_VERSION_YEAR} --labview-bitness 64
+          vipm build source/.vipb --labview-version ${LABVIEW_VERSION_YEAR} --labview-bitness 64 --show-progress --verbose
 
       - name: Upload Built Package as Artifact
         if: true
