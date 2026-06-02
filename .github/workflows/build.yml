@@ -40,6 +40,7 @@ jobs:
 
 
       - name: GitHub Setup for LabVIEW Container
+        shell: bash
         run: |
           # LabVIEW Container images put default config in /root home dir, but GitHub Actions sets $HOME to /github/home.
           cp -R /root/natinst /github/home/natinst
