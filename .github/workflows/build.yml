@@ -32,6 +32,16 @@ jobs:
 
     steps:
 
+      - name: GitHub Setup for LabVIEW Container
+        run: |
+          cp -R /root/.natinst /github/home/.natinst
+          chown -R $(id -u):$(id -g) /github/home/.natinst
+          # Verify that the copy was successful and that the permissions are correct.
+          echo "Contents of /github/home/.natinst:"
+          ls -la /github/home/.natinst
+          echo "Contents of /root/.natinst:"
+          ls -la /root/.natinst
+
       # wget is required to download VIPM, and is not included in the base LabVIEW image.
       - name: Install VIPM
         run: |
