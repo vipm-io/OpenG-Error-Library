@@ -86,7 +86,7 @@ jobs:
 
       - name: VIPM Install Packages
         # vipc file is empty
-        if: false
+        if: true
         run: |
           TARGET_DISPLAY=:99
           export DISPLAY="$TARGET_DISPLAY"
@@ -102,7 +102,8 @@ jobs:
           echo "Starting LabVIEW"
           /usr/local/natinst/LabVIEW-2026-64/labviewpro --headless &
 
-          vipm install source/.vipc --show-progress --verbose
+          vipm install oglib_boolean --show-progress --verbose
+          # vipm install source/.vipc --show-progress --verbose
 
       - name: Check user
         run: |
