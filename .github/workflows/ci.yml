@@ -108,6 +108,22 @@ jobs:
       - name: Checkout code                                                                                                   
         uses: actions/checkout@v6
 
+      - name: Write setup-display.sh
+        run: |
+          cat > setup-display.sh <<'EOF'
+          TARGET_DISPLAY=:99
+          export DISPLAY="$TARGET_DISPLAY"
+          # Start Xvfb if it is not already running. If it is already running, assume it is correctly configured for this container and do nothing.
+          if ! pgrep -x Xvfb > /dev/null; then
+              Xvfb "$TARGET_DISPLAY" -screen 0 1280x720x24 -ac +extension GLX +render -noreset \
+                  > /tmp/xvfb.log 2>&1 &
+          fi
+          # Writing this marker file is critical and if if it is not present, the LabVIEW Runtime Engine (required by vipm) may not start properly.
+          mkdir -p /tmp/natinst && echo "1" > /tmp/natinst/LVContainer.txt
+          # Start Xvfb before the LabVIEW Runtime Engine initializes, which happens on the first `vipm` command.
+          echo "$(pgrep -x Xvfb > /dev/null && echo "Xvfb running (DISPLAY=$TARGET_DISPLAY)" || echo "WARNING: Xvfb is required by vipm, but failed to start; DISPLAY=$DISPLAY may not work. Check /tmp/xvfb.log for details.")"
+          EOF
+
       - name: Cache VIPM packages
         uses: actions/cache@v5
         env:
@@ -127,17 +143,7 @@ jobs:
         # we will refresh before building the package
         if: true
         run: |
-          TARGET_DISPLAY=:99
-          export DISPLAY="$TARGET_DISPLAY"
-          # Start Xvfb if it is not already running. If it is already running, assume it is correctly configured for this container and do nothing.
-          if ! pgrep -x Xvfb > /dev/null; then
-              Xvfb "$TARGET_DISPLAY" -screen 0 1280x720x24 -ac +extension GLX +render -noreset \
-                  > /tmp/xvfb.log 2>&1 &
-          fi
-          # Writing this marker file is critical and if if it is not present, the LabVIEW Runtime Engine (required by vipm) may not start properly.
-          mkdir -p /tmp/natinst && echo "1" > /tmp/natinst/LVContainer.txt
-          # Start Xvfb before the LabVIEW Runtime Engine initializes, which happens on the first `vipm` command.
-          echo "$(pgrep -x Xvfb > /dev/null && echo "Xvfb running (DISPLAY=$TARGET_DISPLAY)" || echo "WARNING: Xvfb is required by vipm, but failed to start; DISPLAY=$DISPLAY may not work. Check /tmp/xvfb.log for details.")"
+          source setup-display.sh
           echo "Starting LabVIEW"
           /usr/local/natinst/LabVIEW-${LABVIEW_VERSION_YEAR}-64/labview --headless &
 
@@ -150,17 +156,7 @@ jobs:
         # vipc file is empty
         if: true
         run: |
-          TARGET_DISPLAY=:99
-          export DISPLAY="$TARGET_DISPLAY"
-          # Start Xvfb if it is not already running. If it is already running, assume it is correctly configured for this container and do nothing.
-          if ! pgrep -x Xvfb > /dev/null; then
-              Xvfb "$TARGET_DISPLAY" -screen 0 1280x720x24 -ac +extension GLX +render -noreset \
-                  > /tmp/xvfb.log 2>&1 &
-          fi
-          # Writing this marker file is critical and if if it is not present, the LabVIEW Runtime Engine (required by vipm) may not start properly.
-          mkdir -p /tmp/natinst && echo "1" > /tmp/natinst/LVContainer.txt
-          # Start Xvfb before the LabVIEW Runtime Engine initializes, which happens on the first `vipm` command.
-          echo "$(pgrep -x Xvfb > /dev/null && echo "Xvfb running (DISPLAY=$TARGET_DISPLAY)" || echo "WARNING: Xvfb is required by vipm, but failed to start; DISPLAY=$DISPLAY may not work. Check /tmp/xvfb.log for details.")"
+          source setup-display.sh
           echo "Starting LabVIEW"
           /usr/local/natinst/LabVIEW-${LABVIEW_VERSION_YEAR}-64/labview --headless &
 
@@ -191,17 +187,7 @@ jobs:
         # vipc file is empty
         if: true
         run: |
-          TARGET_DISPLAY=:99
-          export DISPLAY="$TARGET_DISPLAY"
-          # Start Xvfb if it is not already running. If it is already running, assume it is correctly configured for this container and do nothing.
-          if ! pgrep -x Xvfb > /dev/null; then
-              Xvfb "$TARGET_DISPLAY" -screen 0 1280x720x24 -ac +extension GLX +render -noreset \
-                  > /tmp/xvfb.log 2>&1 &
-          fi
-          # Writing this marker file is critical and if if it is not present, the LabVIEW Runtime Engine (required by vipm) may not start properly.
-          mkdir -p /tmp/natinst && echo "1" > /tmp/natinst/LVContainer.txt
-          # Start Xvfb before the LabVIEW Runtime Engine initializes, which happens on the first `vipm` command.
-          echo "$(pgrep -x Xvfb > /dev/null && echo "Xvfb running (DISPLAY=$TARGET_DISPLAY)" || echo "WARNING: Xvfb is required by vipm, but failed to start; DISPLAY=$DISPLAY may not work. Check /tmp/xvfb.log for details.")"
+          source setup-display.sh
           echo "Starting LabVIEW"
           /usr/local/natinst/LabVIEW-${LABVIEW_VERSION_YEAR}-64/labview --headless &
 
