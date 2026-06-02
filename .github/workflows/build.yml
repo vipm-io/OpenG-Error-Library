@@ -63,7 +63,7 @@ jobs:
 
       - name: VIPM Refresh Package Index
         # we will refresh before building the package
-        if: false
+        if: true
         run: |
           TARGET_DISPLAY=:99
           export DISPLAY="$TARGET_DISPLAY"
@@ -103,6 +103,24 @@ jobs:
           /usr/local/natinst/LabVIEW-2026-64/labviewpro --headless &
 
           vipm install source/.vipc --show-progress --verbose
+
+      - name: Check user
+        run: |
+          echo "Current user:"
+          whoami
+          echo "Home directory:"
+          echo "$HOME"
+          echo "Contents of home directory:"
+          ls -la "$HOME"
+
+      - name: Upload Settings Files as Artifacts
+        if: true
+        uses: actions/upload-artifact@v3
+        with:
+          name: vipm-settings-${{ matrix.LABVIEW_CONTAINER }}
+          path: |
+            /user/local/jki/vipm/Settings.ini
+            /root/natinst/.config/LabVIEW-2026/labview*
 
       - name: VIPM Build Package
         # vipc file is empty
