@@ -77,7 +77,7 @@ jobs:
           # Start Xvfb before the LabVIEW Runtime Engine initializes, which happens on the first `vipm` command.
           echo "$(pgrep -x Xvfb > /dev/null && echo "Xvfb running (DISPLAY=$TARGET_DISPLAY)" || echo "WARNING: Xvfb is required by vipm, but failed to start; DISPLAY=$DISPLAY may not work. Check /tmp/xvfb.log for details.")"
           echo "Starting LabVIEW"
-          /usr/local/natinst/LabVIEW-2026-64/labviewprofull --headless &
+          /usr/local/natinst/LabVIEW-2026-64/labviewpro --headless &
 
           vipm refresh --show-progress --verbose
 
@@ -100,7 +100,7 @@ jobs:
           # Start Xvfb before the LabVIEW Runtime Engine initializes, which happens on the first `vipm` command.
           echo "$(pgrep -x Xvfb > /dev/null && echo "Xvfb running (DISPLAY=$TARGET_DISPLAY)" || echo "WARNING: Xvfb is required by vipm, but failed to start; DISPLAY=$DISPLAY may not work. Check /tmp/xvfb.log for details.")"
           echo "Starting LabVIEW"
-          /usr/local/natinst/LabVIEW-2026-64/labviewprofull --headless &
+          /usr/local/natinst/LabVIEW-2026-64/labviewpro --headless &
 
           vipm install source/.vipc --show-progress --verbose
 
@@ -120,7 +120,7 @@ jobs:
           # Start Xvfb before the LabVIEW Runtime Engine initializes, which happens on the first `vipm` command.
           echo "$(pgrep -x Xvfb > /dev/null && echo "Xvfb running (DISPLAY=$TARGET_DISPLAY)" || echo "WARNING: Xvfb is required by vipm, but failed to start; DISPLAY=$DISPLAY may not work. Check /tmp/xvfb.log for details.")"
           echo "Starting LabVIEW"
-          /usr/local/natinst/LabVIEW-2026-64/labviewprofull --headless &
+          /usr/local/natinst/LabVIEW-2026-64/labviewpro --headless &
 
           vipm refresh --show-progress --verbose
           vipm build source/.vipb --labview-version 2026 --labview-bitness 64 --show-progress --verbose
