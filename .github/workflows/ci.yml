@@ -159,7 +159,6 @@ jobs:
           echo "Starting LabVIEW"
           /usr/local/natinst/LabVIEW-${LABVIEW_VERSION_YEAR}-64/labview --headless &
 
-          vipm refresh --show-progress --verbose
           vipm build source/.vipb --labview-version ${LABVIEW_VERSION_YEAR} --labview-bitness 64 --show-progress --verbose
 
       - name: Upload Built Package as Artifact
