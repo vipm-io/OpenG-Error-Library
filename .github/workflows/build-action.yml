@@ -50,8 +50,9 @@ jobs:
 
       - name: Refresh, install dependencies, and build the VI Package
         id: build
-        # TODO: pin to @v1 once the action cuts a release.
-        uses: vipm-io/action-vipm-build@main
+        # Pinned to an exact version; no floating @v0/@v0.0 tags are published.
+        # For stronger supply-chain hardening, pin to the commit SHA instead.
+        uses: vipm-io/action-vipm-build@v0.0.0
         with:
           path: source                 # auto-finds source/.vipb
           refresh: 'true'
