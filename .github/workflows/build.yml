@@ -70,7 +70,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Cache VIPM packages
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         env:
           # Bump to invalidate every VIPM cache (restore-keys included).
           CACHE_VERSION: 1
@@ -181,7 +181,10 @@ jobs:
   Build-Windows:
 
     # runs-on: windows-latest
-    runs-on: windows-runner-custom
+    runs-on: windows-latest
+
+    # disabled for now since container is so large/slow
+    if: false
 
     strategy:
       fail-fast: false
