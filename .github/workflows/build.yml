@@ -70,10 +70,10 @@ jobs:
           CACHE_VERSION: 1
         with:
           path: /usr/local/jki/vipm/cache/
-          key: vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ matrix.LABVIEW_CONTAINER }}-${{ env.VIPM_VERSION }}-${{ hashFiles('source/.vipc') }}
+          key: vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ matrix.LABVIEW_IMAGE }}-${{ env.VIPM_VERSION }}-${{ hashFiles('source/.vipc') }}
           restore-keys: |
-            vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ matrix.LABVIEW_CONTAINER }}-${{ env.VIPM_VERSION }}-
-            vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ matrix.LABVIEW_CONTAINER }}-
+            vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ matrix.LABVIEW_IMAGE }}-${{ env.VIPM_VERSION }}-
+            vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ matrix.LABVIEW_IMAGE }}-
 
       - name: Print VIPM About
         run: vipm about
