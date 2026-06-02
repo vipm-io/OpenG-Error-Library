@@ -112,7 +112,8 @@ jobs:
           echo "Starting LabVIEW"
           /usr/local/natinst/LabVIEW-2026-64/labview --headless &
 
-          vipm install oglib_boolean --show-progress --verbose
+          vipm install error.dragon --show-progress --verbose --labview-version 2026 --labview-bitness 64
+          # vipm install oglib_boolean --show-progress --verbose
           # vipm install source/.vipc --show-progress --verbose
 
       - name: Check user
