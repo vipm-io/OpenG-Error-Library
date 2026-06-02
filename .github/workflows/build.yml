@@ -48,12 +48,15 @@ jobs:
 
       - name: Cache VIPM packages
         uses: actions/cache@v4
+        env:
+          # Bump to invalidate every VIPM cache (restore-keys included).
+          CACHE_VERSION: 1
         with:
           path: /usr/local/jki/vipm/cache/
-          key: vipm-${{ runner.os }}-${{ matrix.LABVIEW_CONTAINER }}-${{ env.VIPM_VERSION }}-${{ hashFiles('source/.vipc') }}
+          key: vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ matrix.LABVIEW_CONTAINER }}-${{ env.VIPM_VERSION }}-${{ hashFiles('source/.vipc') }}
           restore-keys: |
-            vipm-${{ runner.os }}-${{ matrix.LABVIEW_CONTAINER }}-${{ env.VIPM_VERSION }}-
-            vipm-${{ runner.os }}-${{ matrix.LABVIEW_CONTAINER }}-
+            vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ matrix.LABVIEW_CONTAINER }}-${{ env.VIPM_VERSION }}-
+            vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ matrix.LABVIEW_CONTAINER }}-
 
       - name: Print VIPM About
         run: vipm about
@@ -74,7 +77,7 @@ jobs:
           # Start Xvfb before the LabVIEW Runtime Engine initializes, which happens on the first `vipm` command.
           echo "$(pgrep -x Xvfb > /dev/null && echo "Xvfb running (DISPLAY=$TARGET_DISPLAY)" || echo "WARNING: Xvfb is required by vipm, but failed to start; DISPLAY=$DISPLAY may not work. Check /tmp/xvfb.log for details.")"
           echo "Starting LabVIEW"
-          /usr/local/natinst/LabVIEW-2026-64/labviewprofull &
+          /usr/local/natinst/LabVIEW-2026-64/labviewprofull --headless &
 
           vipm refresh --show-progress --verbose
 
@@ -97,7 +100,7 @@ jobs:
           # Start Xvfb before the LabVIEW Runtime Engine initializes, which happens on the first `vipm` command.
           echo "$(pgrep -x Xvfb > /dev/null && echo "Xvfb running (DISPLAY=$TARGET_DISPLAY)" || echo "WARNING: Xvfb is required by vipm, but failed to start; DISPLAY=$DISPLAY may not work. Check /tmp/xvfb.log for details.")"
           echo "Starting LabVIEW"
-          /usr/local/natinst/LabVIEW-2026-64/labviewprofull &
+          /usr/local/natinst/LabVIEW-2026-64/labviewprofull --headless &
 
           vipm install source/.vipc --show-progress --verbose
 
@@ -117,7 +120,7 @@ jobs:
           # Start Xvfb before the LabVIEW Runtime Engine initializes, which happens on the first `vipm` command.
           echo "$(pgrep -x Xvfb > /dev/null && echo "Xvfb running (DISPLAY=$TARGET_DISPLAY)" || echo "WARNING: Xvfb is required by vipm, but failed to start; DISPLAY=$DISPLAY may not work. Check /tmp/xvfb.log for details.")"
           echo "Starting LabVIEW"
-          /usr/local/natinst/LabVIEW-2026-64/labviewprofull &
+          /usr/local/natinst/LabVIEW-2026-64/labviewprofull --headless &
 
           vipm refresh --show-progress --verbose
           vipm build source/.vipb --labview-version 2026 --labview-bitness 64 --show-progress --verbose
