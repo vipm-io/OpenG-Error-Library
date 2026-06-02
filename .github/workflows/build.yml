@@ -132,7 +132,7 @@ jobs:
           name: vipm-settings-${{ matrix.LABVIEW_CONTAINER }}
           path: |
             /github/home
-            /user/local/jki/vipm/Settings.ini
+            /usr/local/jki/vipm/Settings.ini
             /root/natinst/.config/LabVIEW-2026/labview*
 
       - name: VIPM Build Package
