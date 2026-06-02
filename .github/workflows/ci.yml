@@ -58,19 +58,12 @@ jobs:
       run:
         shell: bash
 
-    strategy:
-      fail-fast: false
-      matrix:
-        LABVIEW_IMAGE:
-          # - 2026q1-linux
-          - 2026q1patch2-linux
-          # - 2025q3patch1-linux
-
     # The official LabVIEW container image from NI
     container:
-      image: nationalinstruments/labview:${{ matrix.LABVIEW_IMAGE }}
+      image: nationalinstruments/labview:2026q1patch2-linux
 
     env:
+      LABVIEW_IMAGE: 2026q1patch2-linux
       VIPM_RELEASE_TYPE: preview
       VIPM_VERSION: 26.3.0-3859
       VIPM_COMMUNITY_EDITION: true
@@ -80,7 +73,6 @@ jobs:
       - name: Setup Variables
         run: |
           # Derive LabVIEW version year from the container image tag
-          LABVIEW_IMAGE="${{ matrix.LABVIEW_IMAGE }}" # e.g. "2026q1-linux"
           LABVIEW_VERSION_YEAR="${LABVIEW_IMAGE:0:4}" # e.g. "2026" from "2026q1-linux"
           echo "LABVIEW_VERSION_YEAR=${LABVIEW_VERSION_YEAR}" >> "$GITHUB_ENV"
 
@@ -131,10 +123,10 @@ jobs:
           CACHE_VERSION: 1
         with:
           path: /usr/local/jki/vipm/cache/
-          key: vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ matrix.LABVIEW_IMAGE }}-${{ env.VIPM_VERSION }}-${{ hashFiles('source/.vipc') }}
+          key: vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ env.LABVIEW_IMAGE }}-${{ env.VIPM_VERSION }}-${{ hashFiles('source/.vipc', 'error.dragon') }}
           restore-keys: |
-            vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ matrix.LABVIEW_IMAGE }}-${{ env.VIPM_VERSION }}-
-            vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ matrix.LABVIEW_IMAGE }}-
+            vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ env.LABVIEW_IMAGE }}-${{ env.VIPM_VERSION }}-
+            vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ env.LABVIEW_IMAGE }}-
 
       - name: Print VIPM About
         run: vipm about
@@ -177,7 +169,7 @@ jobs:
         if: true
         uses: actions/upload-artifact@v7
         with:
-          name: vipm-settings-${{ matrix.LABVIEW_IMAGE }}
+          name: vipm-settings-${{ env.LABVIEW_IMAGE }}
           path: |
             /github/home
             /usr/local/jki/vipm/Settings.ini
@@ -199,6 +191,6 @@ jobs:
         if: true
         uses: actions/upload-artifact@v7
         with:
-          name: vi-package-${{ matrix.LABVIEW_IMAGE }}
+          name: vi-package-${{ env.LABVIEW_IMAGE }}
           path: |
             *.vip
