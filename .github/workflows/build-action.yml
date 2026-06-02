@@ -1,0 +1,72 @@
+name: build (action)
+
+# Builds the VI Package using the reusable vipm-io/action-vipm-build action,
+# which encapsulates the container display/headless-LabVIEW plumbing and runs
+# refresh -> install -> build. Compare with the inline Build job in ci.yml.
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+
+  Build:
+
+    runs-on: ubuntu-latest
+
+    # The LabVIEW container defaults to `sh`; use `bash` for predictable syntax.
+    defaults:
+      run:
+        shell: bash
+
+    env:
+      LABVIEW_IMAGE: 2026q1patch2-linux
+
+    container:
+      image: nationalinstruments/labview:2026q1patch2-linux
+
+    steps:
+
+      - name: Install git for actions/checkout
+        # git is required by actions/checkout but is not in the base LabVIEW image.
+        run: apt-get update && apt-get install -y git
+
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Cache VIPM packages
+        uses: actions/cache@v5
+        env:
+          CACHE_VERSION: 1
+        with:
+          path: /usr/local/jki/vipm/cache/
+          key: vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ env.LABVIEW_IMAGE }}-${{ hashFiles('source/.vipc', 'error.dragon') }}
+          restore-keys: |
+            vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ env.LABVIEW_IMAGE }}-
+
+      - name: Refresh, install dependencies, and build the VI Package
+        id: build
+        # TODO: pin to @v1 once the action cuts a release.
+        uses: vipm-io/action-vipm-build@main
+        with:
+          path: source                 # auto-finds source/.vipb
+          refresh: 'true'
+          install: |
+            error.dragon
+          output_directory: dist
+          # LabVIEW version is auto-detected from the container (2026).
+          vipm_release_type: preview    # VIPM Linux builds ship on the preview channel
+          vipm_version: 26.3.0-3859
+          community_edition: 'true'
+          show_progress: 'true'
+          verbose: 'true'
+
+      - name: Upload Built Package as Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: vi-package-${{ env.LABVIEW_IMAGE }}
+          path: dist/*.vip
