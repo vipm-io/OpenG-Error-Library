@@ -32,15 +32,6 @@ jobs:
 
     steps:
 
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: list files
-        run: ls -la
-
-      - name: list .git directory
-        run: ls -la .git
-
       # wget is required to download VIPM, and is not included in the base LabVIEW image.
       - name: Install VIPM
         run: |
@@ -53,6 +44,18 @@ jobs:
             && rm /tmp/vipm.deb
           vipm --version
 
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: list files
+        run: ls -la
+
+      - name: list .git directory
+        run: ls -la .git
+
+      - name: Check Git Status
+        run: git status
+
       - name: Cache VIPM packages
         uses: actions/cache@v4
         with:
@@ -61,9 +64,6 @@ jobs:
           restore-keys: |
             vipm-${{ runner.os }}-${{ matrix.LABVIEW_CONTAINER }}-${{ env.VIPM_VERSION }}-
             vipm-${{ runner.os }}-${{ matrix.LABVIEW_CONTAINER }}-
-
-      # - name: Check Git Status
-      #   run: git status
 
       - name: Print VIPM About
         run: vipm about
