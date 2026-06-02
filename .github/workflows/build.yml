@@ -14,6 +14,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    # LabVIEW container defaults to `sh`. Set it to `bash`, so there are no surprises with syntax in the steps.
     defaults:
       run:
         shell: bash
@@ -27,7 +28,7 @@ jobs:
 
     container:
       image: nationalinstruments/labview:${{ matrix.LABVIEW_IMAGE }}
-      options: --user root
+      # options: --user root
 
     env:
       VIPM_RELEASE_TYPE: preview
@@ -38,10 +39,10 @@ jobs:
 
       - name: Setup Variables
         run: |
+          # Derive LabVIEW version year from the container image tag
           LABVIEW_IMAGE="${{ matrix.LABVIEW_IMAGE }}" # e.g. "2026q1-linux"
           LABVIEW_VERSION_YEAR="${LABVIEW_IMAGE:0:4}" # e.g. "2026" from "2026q1-linux"
           echo "LABVIEW_VERSION_YEAR=${LABVIEW_VERSION_YEAR}" >> "$GITHUB_ENV"
-
 
       - name: GitHub Setup for LabVIEW Container
         run: |
