@@ -44,16 +44,7 @@ jobs:
       - name: Install git for actions/checkout                                                                                
         run: apt-get update && apt-get install -y git                                                                         
       - name: Checkout code                                                                                                   
-        uses: actions/checkout@v6      
-
-      - name: list files
-        run: ls -la
-
-      - name: list .git directory
-        run: ls -la .git
-
-      - name: Check Git Status
-        run: git status
+        uses: actions/checkout@v6
 
       - name: Cache VIPM packages
         uses: actions/cache@v4
