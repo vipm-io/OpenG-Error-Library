@@ -19,7 +19,7 @@ jobs:
       matrix:
         LABVIEW_CONTAINER:
           - 2026q1-linux
-          # - 2025q3patch1-linux
+          - 2025q3patch1-linux
 
     container:
       image: nationalinstruments/labview:${{ matrix.LABVIEW_CONTAINER }}
