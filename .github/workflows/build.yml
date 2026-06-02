@@ -17,12 +17,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        LABVIEW_CONTAINER:
+        LABVIEW_IMAGE:
           - 2026q1-linux
           - 2025q3patch1-linux
 
     container:
-      image: nationalinstruments/labview:${{ matrix.LABVIEW_CONTAINER }}
+      image: nationalinstruments/labview:${{ matrix.LABVIEW_IMAGE }}
       options: --user root
 
     env:
@@ -31,6 +31,13 @@ jobs:
       VIPM_COMMUNITY_EDITION: true
 
     steps:
+
+      - name: Setup Variables
+        run: |
+          LABVIEW_IMAGE="${{ matrix.LABVIEW_IMAGE }}" # e.g. "2026q1-linux"
+          LABVIEW_VERSION_YEAR="${LABVIEW_IMAGE:0:4}" # e.g. "2026" from "2026q1-linux"
+          echo "LABVIEW_VERSION_YEAR=${LABVIEW_VERSION_YEAR}" >> "$GITHUB_ENV"
+
 
       - name: GitHub Setup for LabVIEW Container
         run: |
@@ -87,7 +94,7 @@ jobs:
           # Start Xvfb before the LabVIEW Runtime Engine initializes, which happens on the first `vipm` command.
           echo "$(pgrep -x Xvfb > /dev/null && echo "Xvfb running (DISPLAY=$TARGET_DISPLAY)" || echo "WARNING: Xvfb is required by vipm, but failed to start; DISPLAY=$DISPLAY may not work. Check /tmp/xvfb.log for details.")"
           echo "Starting LabVIEW"
-          /usr/local/natinst/LabVIEW-2026-64/labview --headless &
+          /usr/local/natinst/LabVIEW-LABVIEW_VERSION_YEAR-64/labview --headless &
 
           vipm refresh --show-progress --verbose
 
@@ -110,9 +117,9 @@ jobs:
           # Start Xvfb before the LabVIEW Runtime Engine initializes, which happens on the first `vipm` command.
           echo "$(pgrep -x Xvfb > /dev/null && echo "Xvfb running (DISPLAY=$TARGET_DISPLAY)" || echo "WARNING: Xvfb is required by vipm, but failed to start; DISPLAY=$DISPLAY may not work. Check /tmp/xvfb.log for details.")"
           echo "Starting LabVIEW"
-          /usr/local/natinst/LabVIEW-2026-64/labview --headless &
+          /usr/local/natinst/LabVIEW-${LABVIEW_VERSION_YEAR}-64/labview --headless &
 
-          vipm install error.dragon --show-progress --verbose --labview-version 2026 --labview-bitness 64
+          vipm install error.dragon --show-progress --verbose --labview-version ${LABVIEW_VERSION_YEAR} --labview-bitness 64
           # vipm install oglib_boolean --show-progress --verbose
           # vipm install source/.vipc --show-progress --verbose
 
@@ -129,11 +136,11 @@ jobs:
         if: true
         uses: actions/upload-artifact@v7
         with:
-          name: vipm-settings-${{ matrix.LABVIEW_CONTAINER }}
+          name: vipm-settings-${{ matrix.LABVIEW_IMAGE }}
           path: |
             /github/home
             /usr/local/jki/vipm/Settings.ini
-            /root/natinst/.config/LabVIEW-2026/labview*
+            /root/natinst/.config/LabVIEW-${LABVIEW_VERSION_YEAR}/labview*
 
       - name: VIPM Build Package
         # vipc file is empty
@@ -151,16 +158,16 @@ jobs:
           # Start Xvfb before the LabVIEW Runtime Engine initializes, which happens on the first `vipm` command.
           echo "$(pgrep -x Xvfb > /dev/null && echo "Xvfb running (DISPLAY=$TARGET_DISPLAY)" || echo "WARNING: Xvfb is required by vipm, but failed to start; DISPLAY=$DISPLAY may not work. Check /tmp/xvfb.log for details.")"
           echo "Starting LabVIEW"
-          /usr/local/natinst/LabVIEW-2026-64/labview --headless &
+          /usr/local/natinst/LabVIEW-${LABVIEW_VERSION_YEAR}-64/labview --headless &
 
           vipm refresh --show-progress --verbose
-          vipm build source/.vipb --labview-version 2026 --labview-bitness 64 --show-progress --verbose
+          vipm build source/.vipb --labview-version ${LABVIEW_VERSION_YEAR} --labview-bitness 64 --show-progress --verbose
 
 
       - name: Upload Built Package as Artifact
         if: true
         uses: actions/upload-artifact@v7
         with:
-          name: vi-packages-${{ matrix.LABVIEW_CONTAINER }}
+          name: vi-package-${{ matrix.LABVIEW_IMAGE }}
           path: |
             *.vip
