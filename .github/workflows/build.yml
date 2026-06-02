@@ -188,10 +188,6 @@ jobs:
         LABVIEW_IMAGE:
           - 2026q1patch2-windows
 
-    # The official LabVIEW container image from NI
-    container:
-      image: nationalinstruments/labview:${{ matrix.LABVIEW_IMAGE }}
-
     env:
       VIPM_RELEASE_TYPE: preview
       VIPM_VERSION: 26.3.3859
@@ -199,31 +195,27 @@ jobs:
 
     steps:
 
-      - name: Setup Variables
-        shell: bash
-        run: |
-          # Derive LabVIEW version year from the container image tag
-          LABVIEW_IMAGE="${{ matrix.LABVIEW_IMAGE }}" # e.g. "2026q1-windows"
-          LABVIEW_VERSION_YEAR="${LABVIEW_IMAGE:0:4}" # e.g. "2026" from "2026q1-windows"
-          echo "LABVIEW_VERSION_YEAR=${LABVIEW_VERSION_YEAR}" >> "$GITHUB_ENV"
-
-      - name: Install VIPM
-        shell: cmd
-        run: |
-          curl.exe -L https://packages.jki.net/vipm/preview/vipm-%VIPM_VERSION%-windows-setup.exe -o %TEMP%\vipm-setup.exe
-          start /wait %TEMP%\vipm-setup.exe /quiet /norestart
-          del %TEMP%\vipm-setup.exe
-          vipm about
-
-      - name: Checkout code                                                                                                   
+      - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: VIPM Install Packages and Build
-        if: true
-        run: |
-          vipm refresh --show-progress --verbose
-          vipm install error.dragon --show-progress --verbose --labview-version ${LABVIEW_VERSION_YEAR} --labview-bitness 64
-          vipm build source/.vipb --labview-version ${LABVIEW_VERSION_YEAR} --labview-bitness 64 --show-progress --verbose
+      - name: VIPM Install Packages and Build in LabVIEW container
+        uses: philips-software/run-windows-docker-container-action@v2.0.1
+        with:
+          image: nationalinstruments/labview:${{ matrix.LABVIEW_IMAGE }}
+          entrypoint: powershell.exe
+          env_names: VIPM_RELEASE_TYPE,VIPM_VERSION,VIPM_COMMUNITY_EDITION
+          run: >-
+            $ErrorActionPreference = "Stop";
+            $labviewImage = "${{ matrix.LABVIEW_IMAGE }}";
+            $labviewVersionYear = $labviewImage.Substring(0, 4);
+            Write-Host "LABVIEW_VERSION_YEAR=$labviewVersionYear";
+            curl.exe -L "https://packages.jki.net/vipm/$env:VIPM_RELEASE_TYPE/vipm-$env:VIPM_VERSION-windows-setup.exe" -o "$env:TEMP\vipm-setup.exe";
+            Start-Process -FilePath "$env:TEMP\vipm-setup.exe" -ArgumentList "/quiet /norestart" -Wait;
+            Remove-Item "$env:TEMP\vipm-setup.exe" -Force;
+            vipm about;
+            vipm refresh --show-progress --verbose;
+            vipm install error.dragon --show-progress --verbose --labview-version $labviewVersionYear --labview-bitness 64;
+            vipm build source/.vipb --labview-version $labviewVersionYear --labview-bitness 64 --show-progress --verbose;
 
       - name: Upload Built Package as Artifact
         if: true
