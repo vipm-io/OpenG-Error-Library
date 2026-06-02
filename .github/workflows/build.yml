@@ -35,6 +35,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
+      - name: list files
+        run: ls -la
+
+      - name: list .git directory
+        run: ls -la .git
+
       # wget is required to download VIPM, and is not included in the base LabVIEW image.
       - name: Install VIPM
         run: |
