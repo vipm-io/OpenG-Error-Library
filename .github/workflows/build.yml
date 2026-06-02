@@ -203,7 +203,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: VIPM Install Packages and Build in LabVIEW container
-        uses: philips-software/run-windows-docker-container-action@v2.0.1
+        uses: step-security/run-windows-docker-container-action@v2.0.1
         with:
           image: nationalinstruments/labview:${{ matrix.LABVIEW_IMAGE }}
           entrypoint: powershell.exe
@@ -218,6 +218,7 @@ jobs:
             Remove-Item "vipm-setup.exe" -Force;
             $vipmSupportDir = Join-Path $env:ProgramFiles "JKI\VI Package Manager\support";
             $env:PATH = "$vipmSupportDir;$env:PATH";
+            Get-Command vipm;
             vipm about;
             vipm refresh --show-progress --verbose;
             vipm install error.dragon --show-progress --verbose --labview-version $labviewVersionYear --labview-bitness 64;
