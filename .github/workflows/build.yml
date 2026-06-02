@@ -184,7 +184,7 @@ jobs:
     runs-on: windows-latest
 
     # disabled for now since container is so large/slow
-    if: false
+    if: true
 
     strategy:
       fail-fast: false
@@ -213,9 +213,11 @@ jobs:
             $labviewImage = "${{ matrix.LABVIEW_IMAGE }}";
             $labviewVersionYear = $labviewImage.Substring(0, 4);
             Write-Host "LABVIEW_VERSION_YEAR=$labviewVersionYear";
-            curl.exe -L "https://packages.jki.net/vipm/$env:VIPM_RELEASE_TYPE/vipm-$env:VIPM_VERSION-windows-setup.exe" -o "$env:TEMP\vipm-setup.exe";
-            Start-Process -FilePath "$env:TEMP\vipm-setup.exe" -ArgumentList "/quiet /norestart" -Wait;
-            Remove-Item "$env:TEMP\vipm-setup.exe" -Force;
+            Invoke-WebRequest -Uri "https://packages.jki.net/vipm/${env:VIPM_RELEASE_TYPE}/vipm-${env:VIPM_VERSION}-windows-setup.exe" -OutFile "vipm-setup.exe";
+            Start-Process -Wait -FilePath "vipm-setup.exe" -ArgumentList "/exenoui /qn";
+            Remove-Item "vipm-setup.exe" -Force;
+            $vipmSupportDir = Join-Path $env:ProgramFiles "JKI\VI Package Manager\support";
+            $env:PATH = "$vipmSupportDir;$env:PATH";
             vipm about;
             vipm refresh --show-progress --verbose;
             vipm install error.dragon --show-progress --verbose --labview-version $labviewVersionYear --labview-bitness 64;
