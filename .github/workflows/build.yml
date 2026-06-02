@@ -155,3 +155,12 @@ jobs:
 
           vipm refresh --show-progress --verbose
           vipm build source/.vipb --labview-version 2026 --labview-bitness 64 --show-progress --verbose
+
+
+      - name: Upload Built Package as Artifact
+        if: true
+        uses: actions/upload-artifact@v7
+        with:
+          name: vi-packages-${{ matrix.LABVIEW_CONTAINER }}
+          path: |
+            *.vip
