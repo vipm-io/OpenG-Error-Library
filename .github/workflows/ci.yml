@@ -67,6 +67,7 @@ jobs:
       VIPM_RELEASE_TYPE: release
       VIPM_VERSION: 26.3.0-3963
       VIPM_COMMUNITY_EDITION: true
+      VIPM_DESKTOP_LIVELINESS_TIMEOUT: 300
 
     steps:
 
