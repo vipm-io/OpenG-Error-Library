@@ -1,0 +1,18 @@
+# LabVIEW/VIPM XML text files are authored on Windows. Keep CRLF in the working
+# tree but normalize to LF in the repository so tool re-saves stop producing
+# whole-file line-ending churn in diffs.
+*.vipb    text eol=crlf
+*.vipc    text eol=crlf
+*.lvproj  text eol=crlf
+*.lvlib   text eol=crlf
+*.lvclass text eol=crlf
+
+# LabVIEW binaries and images must never have line-ending conversion applied.
+*.vi   binary
+*.vit  binary
+*.ctl  binary
+*.ctt  binary
+*.mnu  binary
+*.bin  binary
+*.llb  binary
+*.png  binary
