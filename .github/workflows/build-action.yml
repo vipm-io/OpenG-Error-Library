@@ -61,7 +61,9 @@ jobs:
           output_directory: dist
           # LabVIEW version is auto-detected from the container (2026).
           vipm_release_type: preview    # VIPM Linux builds ship on the preview channel
-          vipm_version: 26.3.0-3859
+          # Exact preview build. The action cannot resolve a "latest preview" alias
+          # (it only special-cases `latest` on the stable channel), so pin explicitly.
+          vipm_version: 26.3.1-3977
           community_edition: 'true'
           show_progress: 'true'
           verbose: 'true'
