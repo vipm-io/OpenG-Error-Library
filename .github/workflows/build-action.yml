@@ -53,9 +53,10 @@ jobs:
 
       - name: Refresh, install dependencies, and build the VI Package
         id: build
-        # Pinned to the head commit of vipm-io/action-vipm-build#1, which adds
-        # channel-aware "latest" resolution for the preview/develop channels.
-        uses: vipm-io/action-vipm-build@0b9ba53221c4d7434385c2d023acf9c82e5d2078
+        # Pinned to an exact version. v0.0.1 adds channel-aware "latest"
+        # resolution for the preview/develop channels (latest -> latest_preview).
+        # For stronger supply-chain hardening, pin to the commit SHA instead.
+        uses: vipm-io/action-vipm-build@v0.0.1
         with:
           path: source                 # auto-finds source/.vipb
           refresh: 'true'
