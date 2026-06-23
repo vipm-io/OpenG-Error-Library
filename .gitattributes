@@ -1,18 +1,5 @@
-# LabVIEW/VIPM XML text files are authored on Windows. Keep CRLF in the working
-# tree but normalize to LF in the repository so tool re-saves stop producing
-# whole-file line-ending churn in diffs.
-*.vipb    text eol=crlf
-*.vipc    text eol=crlf
-*.lvproj  text eol=crlf
-*.lvlib   text eol=crlf
-*.lvclass text eol=crlf
-
-# LabVIEW binaries and images must never have line-ending conversion applied.
-*.vi   binary
-*.vit  binary
-*.ctl  binary
-*.ctt  binary
-*.mnu  binary
-*.bin  binary
-*.llb  binary
-*.png  binary
+# Let git auto-detect text vs binary by content and normalize text to LF in the
+# repository. Binary formats (LabVIEW .vi/.ctl, the zip-based VIPM .vipc, images,
+# etc.) contain NUL bytes, so git detects them automatically and never applies
+# line-ending conversion — they do not need to be listed here.
+* text=auto
