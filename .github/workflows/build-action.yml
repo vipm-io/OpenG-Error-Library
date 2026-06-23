@@ -25,6 +25,9 @@ jobs:
 
     env:
       LABVIEW_IMAGE: 2026q1patch2-linux
+      # vipm reads this from the environment; the default 60s liveliness window
+      # is too tight for this build (matches the value used in ci.yml).
+      VIPM_DESKTOP_LIVELINESS_TIMEOUT: 300
 
     container:
       image: nationalinstruments/labview:2026q1patch2-linux
