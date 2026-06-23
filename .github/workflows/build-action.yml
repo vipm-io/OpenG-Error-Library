@@ -50,9 +50,9 @@ jobs:
 
       - name: Refresh, install dependencies, and build the VI Package
         id: build
-        # Pinned to an exact version; no floating @v0/@v0.0 tags are published.
-        # For stronger supply-chain hardening, pin to the commit SHA instead.
-        uses: vipm-io/action-vipm-build@v0.0.0
+        # Pinned to the head commit of vipm-io/action-vipm-build#1, which adds
+        # channel-aware "latest" resolution for the preview/develop channels.
+        uses: vipm-io/action-vipm-build@0b9ba53221c4d7434385c2d023acf9c82e5d2078
         with:
           path: source                 # auto-finds source/.vipb
           refresh: 'true'
@@ -61,9 +61,9 @@ jobs:
           output_directory: dist
           # LabVIEW version is auto-detected from the container (2026).
           vipm_release_type: preview    # VIPM Linux builds ship on the preview channel
-          # Exact preview build. The action cannot resolve a "latest preview" alias
-          # (it only special-cases `latest` on the stable channel), so pin explicitly.
-          vipm_version: 26.3.1-3977
+          # Track the latest preview build; resolves to the preview channel's
+          # latest_preview alias (requires action-vipm-build#1).
+          vipm_version: latest
           community_edition: 'true'
           show_progress: 'true'
           verbose: 'true'
