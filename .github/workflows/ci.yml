@@ -158,6 +158,7 @@ jobs:
         # Activate the Pro license so this is not a Community Edition build.
         # Credentials come from repository secrets.
         run: |
+          source setup-display.sh
           vipm activate \
             --serial-number "${VIPM_SERIAL_NUMBER}" \
             --name "${VIPM_FULL_NAME}" \
