@@ -195,7 +195,9 @@ jobs:
             *.vip
 
       - name: Upload VIPM and LabVIEW Settings as Artifacts (debugging)
-        if: false
+        # Always run so we can inspect the final Settings.ini after VIPM's first
+        # run rewrites it (we seed it before install; VIPM may modify on startup).
+        if: always()
         uses: actions/upload-artifact@v7
         with:
           name: vipm-settings-${{ env.LABVIEW_IMAGE }}
