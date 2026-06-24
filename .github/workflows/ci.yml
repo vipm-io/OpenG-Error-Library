@@ -91,15 +91,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Seed VIPM Settings
-        # Copy our preferred VIPM configuration into place BEFORE installing VIPM,
-        # so the install picks up these settings (e.g. "Mass Compile After Package
-        # Install?" = FALSE). dpkg treats the package's Settings.ini as a conffile
-        # and will not clobber a pre-existing one.
-        run: |
-          mkdir -p /usr/local/jki/vipm
-          cp "build support/vipm_configuration/Settings.ini" /usr/local/jki/vipm/Settings.ini
-
       # wget is required to download VIPM, and is not included in the base LabVIEW image.
       - name: Install VIPM
         run: |
@@ -197,6 +188,10 @@ jobs:
           echo "Starting LabVIEW"
           /usr/local/natinst/LabVIEW-${LABVIEW_VERSION_YEAR}-64/labview --headless &
 
+          echo "Updating VIPM Settings (enable 'VIPB LabVIEW Save Version')"
+          uv run tools/update_vipm_settings.py
+
+          echo "Building VIPM package"
           vipm build source/.vipb --labview-version ${LABVIEW_VERSION_YEAR} --labview-bitness 64 --show-progress --verbose
 
       - name: Upload Built Package as Artifact
