@@ -154,6 +154,19 @@ jobs:
             vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ env.LABVIEW_IMAGE }}-${{ env.VIPM_RELEASE_TYPE }}-
             vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ env.LABVIEW_IMAGE }}-
 
+      - name: Activate VIPM Pro
+        # Activate the Pro license so this is not a Community Edition build.
+        # Credentials come from repository secrets.
+        run: |
+          vipm activate \
+            --serial-number "${VIPM_SERIAL_NUMBER}" \
+            --name "${VIPM_FULL_NAME}" \
+            --email "${VIPM_EMAIL}"
+        env:
+          VIPM_SERIAL_NUMBER: ${{ secrets.VIPM_SERIAL_NUMBER }}
+          VIPM_FULL_NAME: ${{ secrets.VIPM_FULL_NAME }}
+          VIPM_EMAIL: ${{ secrets.VIPM_EMAIL }}
+
       - name: Print VIPM About
         run: vipm about
 
