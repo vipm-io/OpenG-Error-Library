@@ -8,6 +8,11 @@
 
 # Built VI Packages
 *.vip
+*.vip.old
 
 # Unit test report
 /*report.xml
+
+# python caches
+__pycache__/
+
