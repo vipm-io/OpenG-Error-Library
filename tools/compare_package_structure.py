@@ -170,20 +170,6 @@ def normalize(value: str, version: str) -> str:
     return value.replace(version, "<VERSION>") if version else value
 
 
-def canonical_value(section: str, value: str, version: str) -> str:
-    """Canonicalize a spec value for comparison.
-
-    Beyond version normalization, this absorbs one known cross-version
-    serialization quirk: VIPM 26.x writes an unset Script VI path as ``"/"``
-    where older builds wrote ``""``. Both mean "no script", so they are folded
-    together -- a real (non-empty, non-root) script path is left untouched.
-    """
-    value = normalize(value, version)
-    if section == "Script VIs" and value.strip('"') in ("", "/"):
-        return '""'
-    return value
-
-
 def compare_manifest(
     baseline: Package, candidate: Package
 ) -> tuple[list[str], list[str], list[str]]:
@@ -251,9 +237,7 @@ def compare_section(
     for key in sorted(set(cand_items) - set(base_items)):
         diffs.append(Difference(f"[{section}] {key}", None, cand_items[key], (section, key) in volatile))
     for key in sorted(set(base_items) & set(cand_items)):
-        if canonical_value(section, base_items[key], base_version) != canonical_value(
-            section, cand_items[key], cand_version
-        ):
+        if normalize(base_items[key], base_version) != normalize(cand_items[key], cand_version):
             diffs.append(
                 Difference(
                     f"[{section}] {key}", base_items[key], cand_items[key], (section, key) in volatile
