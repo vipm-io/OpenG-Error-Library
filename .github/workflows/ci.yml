@@ -85,6 +85,22 @@ jobs:
           cp -R /root/natinst /github/home/natinst
           chown -R $(id -u):$(id -g) /github/home/natinst
 
+      - name: Install git for actions/checkout
+        # git is required for the actions/checkout step, but is not included in the base LabVIEW image.
+        run: apt-get update && apt-get install -y git
+
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Seed VIPM Settings
+        # Copy our preferred VIPM configuration into place BEFORE installing VIPM,
+        # so the install picks up these settings (e.g. "Mass Compile After Package
+        # Install?" = FALSE). dpkg treats the package's Settings.ini as a conffile
+        # and will not clobber a pre-existing one.
+        run: |
+          mkdir -p /usr/local/jki/vipm
+          cp "build support/vipm_configuration/Settings.ini" /usr/local/jki/vipm/Settings.ini
+
       # wget is required to download VIPM, and is not included in the base LabVIEW image.
       - name: Install VIPM
         run: |
@@ -104,12 +120,6 @@ jobs:
           wget -O /tmp/vipm.deb "${VIPM_DEB_URL}"
           dpkg -i /tmp/vipm.deb && rm /tmp/vipm.deb
           vipm --version
-
-      - name: Install git for actions/checkout
-        # git is required for the actions/checkout step, but is not included in the base LabVIEW image.                                                                         
-        run: apt-get update && apt-get install -y git                                                                         
-      - name: Checkout code                                                                                                   
-        uses: actions/checkout@v6
 
         # This is a reusable script to set up the display for VIPM and LabVIEW.
         # see https://docs.vipm.io/preview/cli/docker/#display-and-labview-setup-linux-containers
