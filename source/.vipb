@@ -14,8 +14,8 @@
     <Product_Name>OpenG Error Library</Product_Name>
     <Was_Built>true</Was_Built>
     <Target>LabVIEW</Target>
-    <Package_LabVIEW_Save_Version>false</Package_LabVIEW_Save_Version>
-    <LabVIEW_Save_Version/>
+    <Package_LabVIEW_Save_Version>true</Package_LabVIEW_Save_Version>
+    <LabVIEW_Save_Version>20.0</LabVIEW_Save_Version>
   </Library_General_Settings>
   <Advanced_Settings>
     <Package_Dependencies/>
