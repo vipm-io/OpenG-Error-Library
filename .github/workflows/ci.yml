@@ -65,7 +65,7 @@ jobs:
     env:
       LABVIEW_IMAGE: 2026q1patch2-linux
       VIPM_RELEASE_TYPE: preview
-      VIPM_VERSION: '2026.3.1-3987'
+      VIPM_VERSION: 26.3.1-3987
       # VIPM_VERSION: latest_preview
       # VIPM_COMMUNITY_EDITION: true
       VIPM_DESKTOP_LIVELINESS_TIMEOUT: 300
