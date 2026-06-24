@@ -15,8 +15,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      LABVIEW_VERSION_NUMBER: '20.1'
-      LABVIEW_VERSION_YEAR: '2020'
+      LABVIEW_VERSION_NUMBER: '26.3'
+      LABVIEW_VERSION_YEAR: '2026'
       LABVIEW_BITNESS: '64'
 
     steps:
@@ -212,3 +212,4 @@ jobs:
           path: |
             /usr/local/jki/vipm/Settings.ini
             /root/natinst/.config/LabVIEW-${LABVIEW_VERSION_YEAR}/labview*
+            /etc/jki/jki.conf
