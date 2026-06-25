@@ -171,7 +171,7 @@ jobs:
       - name: Update VIPM Settings for LabVIEW Save Version
         run: |
           echo "Updating VIPM Settings (enable 'VIPB LabVIEW Save Version')"
-          uv run tools/update_vipm_settings.py
+          uv run tools/update_vipm_settings.py /usr/local/jki/vipm/Settings.ini
 
       - name: VIPM Refresh Package Index
         # we will refresh before building the package
