@@ -162,10 +162,14 @@ jobs:
       - name: Print VIPM About
         run: vipm about
 
+      - name: Install curl and uv (astral.sh)
+        # curl is required for installing uv (astral.sh), but is not included in the base LabVIEW image.
+        run: |
+          apt-get update && apt-get install -y curl
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+
       - name: Update VIPM Settings for LabVIEW Save Version
         run: |
-          echo "Installing uv (astral.sh) to run update_vipm_settings.py"
-          curl -LsSf https://astral.sh/uv/install.sh | sh
           echo "Updating VIPM Settings (enable 'VIPB LabVIEW Save Version')"
           uv run tools/update_vipm_settings.py
 
