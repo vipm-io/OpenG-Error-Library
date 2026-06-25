@@ -162,6 +162,13 @@ jobs:
       - name: Print VIPM About
         run: vipm about
 
+      - name: Update VIPM Settings for LabVIEW Save Version
+        run: |
+          echo "Installing uv (astral.sh) to run update_vipm_settings.py"
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "Updating VIPM Settings (enable 'VIPB LabVIEW Save Version')"
+          uv run tools/update_vipm_settings.py
+
       - name: VIPM Refresh Package Index
         # we will refresh before building the package
         if: true
@@ -188,9 +195,6 @@ jobs:
           source setup-display.sh
           echo "Starting LabVIEW"
           /usr/local/natinst/LabVIEW-${LABVIEW_VERSION_YEAR}-64/labview --headless &
-
-          echo "Updating VIPM Settings (enable 'VIPB LabVIEW Save Version')"
-          uv run tools/update_vipm_settings.py
 
           echo "Building VIPM package"
           vipm build source/.vipb --labview-version ${LABVIEW_VERSION_YEAR} --labview-bitness 64 --show-progress --verbose
