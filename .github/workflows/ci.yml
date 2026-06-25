@@ -65,9 +65,10 @@ jobs:
     env:
       LABVIEW_IMAGE: 2026q1patch2-linux
       VIPM_RELEASE_TYPE: preview
-      VIPM_VERSION: 26.3.1-3987
+      VIPM_VERSION: 26.3.1
+      VIPM_BUILD: 3991
       # VIPM_VERSION: latest_preview
-      # VIPM_COMMUNITY_EDITION: true
+      VIPM_COMMUNITY_EDITION: true
       VIPM_DESKTOP_LIVELINESS_TIMEOUT: 300
 
     steps:
@@ -97,10 +98,10 @@ jobs:
           apt-get update && apt-get install -y wget
           case "${VIPM_RELEASE_TYPE}" in
             preview)
-              VIPM_DEB_URL="https://packages.jki.net/vipm/preview/vipm_${VIPM_VERSION}_amd64.deb"
+              VIPM_DEB_URL="https://packages.jki.net/vipm/preview/vipm_${VIPM_VERSION}-${VIPM_BUILD}_amd64.deb"
               ;;
             release)
-              VIPM_DEB_URL="https://traffic.libsyn.com/secure/jkinc/vipm_${VIPM_VERSION}_amd64.deb"
+              VIPM_DEB_URL="https://traffic.libsyn.com/secure/jkinc/vipm_${VIPM_VERSION}-${VIPM_BUILD}_amd64.deb"
               ;;
             *)
               echo "Unsupported VIPM_RELEASE_TYPE: ${VIPM_RELEASE_TYPE}" >&2
@@ -144,19 +145,19 @@ jobs:
             vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ env.LABVIEW_IMAGE }}-${{ env.VIPM_RELEASE_TYPE }}-
             vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ env.LABVIEW_IMAGE }}-
 
-      - name: Activate VIPM Pro
-        # Activate the Pro license so this is not a Community Edition build.
-        # Credentials come from repository secrets.
-        run: |
-          source setup-display.sh
-          vipm activate \
-            --serial-number "${VIPM_SERIAL_NUMBER}" \
-            --name "${VIPM_FULL_NAME}" \
-            --email "${VIPM_EMAIL}"
-        env:
-          VIPM_SERIAL_NUMBER: ${{ secrets.VIPM_SERIAL_NUMBER }}
-          VIPM_FULL_NAME: ${{ secrets.VIPM_FULL_NAME }}
-          VIPM_EMAIL: ${{ secrets.VIPM_EMAIL }}
+      # - name: Activate VIPM Pro
+      #   # Activate the Pro license so this is not a Community Edition build.
+      #   # Credentials come from repository secrets.
+      #   run: |
+      #     source setup-display.sh
+      #     vipm activate \
+      #       --serial-number "${VIPM_SERIAL_NUMBER}" \
+      #       --name "${VIPM_FULL_NAME}" \
+      #       --email "${VIPM_EMAIL}"
+      #   env:
+      #     VIPM_SERIAL_NUMBER: ${{ secrets.VIPM_SERIAL_NUMBER }}
+      #     VIPM_FULL_NAME: ${{ secrets.VIPM_FULL_NAME }}
+      #     VIPM_EMAIL: ${{ secrets.VIPM_EMAIL }}
 
       - name: Print VIPM About
         run: vipm about
