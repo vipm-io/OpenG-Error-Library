@@ -15,8 +15,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      LABVIEW_VERSION_NUMBER: '20.1'
-      LABVIEW_VERSION_YEAR: '2020'
+      LABVIEW_VERSION_NUMBER: '26.3'
+      LABVIEW_VERSION_YEAR: '2026'
       LABVIEW_BITNESS: '64'
 
     steps:
@@ -65,10 +65,9 @@ jobs:
     env:
       LABVIEW_IMAGE: 2026q1patch2-linux
       VIPM_RELEASE_TYPE: preview
-      VIPM_VERSION: latest_preview
-      # VIPM_RELEASE_TYPE: release
-      # VIPM_VERSION: 26.3.0-3963
-      VIPM_COMMUNITY_EDITION: true
+      VIPM_VERSION: 26.3.1
+      VIPM_BUILD: 3991
+      # VIPM_COMMUNITY_EDITION: true
       VIPM_DESKTOP_LIVELINESS_TIMEOUT: 300
 
     steps:
@@ -85,16 +84,23 @@ jobs:
           cp -R /root/natinst /github/home/natinst
           chown -R $(id -u):$(id -g) /github/home/natinst
 
+      - name: Install git for actions/checkout
+        # git is required for the actions/checkout step, but is not included in the base LabVIEW image.
+        run: apt-get update && apt-get install -y git
+
+      - name: Checkout code
+        uses: actions/checkout@v6
+
       # wget is required to download VIPM, and is not included in the base LabVIEW image.
       - name: Install VIPM
         run: |
           apt-get update && apt-get install -y wget
           case "${VIPM_RELEASE_TYPE}" in
             preview)
-              VIPM_DEB_URL="https://packages.jki.net/vipm/preview/vipm_${VIPM_VERSION}_amd64.deb"
+              VIPM_DEB_URL="https://packages.jki.net/vipm/preview/vipm_${VIPM_VERSION}-${VIPM_BUILD}_amd64.deb"
               ;;
             release)
-              VIPM_DEB_URL="https://traffic.libsyn.com/secure/jkinc/vipm_${VIPM_VERSION}_amd64.deb"
+              VIPM_DEB_URL="https://traffic.libsyn.com/secure/jkinc/vipm_${VIPM_VERSION}-${VIPM_BUILD}_amd64.deb"
               ;;
             *)
               echo "Unsupported VIPM_RELEASE_TYPE: ${VIPM_RELEASE_TYPE}" >&2
@@ -104,12 +110,6 @@ jobs:
           wget -O /tmp/vipm.deb "${VIPM_DEB_URL}"
           dpkg -i /tmp/vipm.deb && rm /tmp/vipm.deb
           vipm --version
-
-      - name: Install git for actions/checkout
-        # git is required for the actions/checkout step, but is not included in the base LabVIEW image.                                                                         
-        run: apt-get update && apt-get install -y git                                                                         
-      - name: Checkout code                                                                                                   
-        uses: actions/checkout@v6
 
         # This is a reusable script to set up the display for VIPM and LabVIEW.
         # see https://docs.vipm.io/preview/cli/docker/#display-and-labview-setup-linux-containers
@@ -144,8 +144,33 @@ jobs:
             vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ env.LABVIEW_IMAGE }}-${{ env.VIPM_RELEASE_TYPE }}-
             vipm-v${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ env.LABVIEW_IMAGE }}-
 
+      - name: Activate VIPM Pro
+        # Activate the Pro license so this is not a Community Edition build.
+        # Credentials come from repository secrets.
+        env:
+          VIPM_SERIAL_NUMBER: ${{ secrets.VIPM_SERIAL_NUMBER }}
+          VIPM_FULL_NAME: ${{ secrets.VIPM_FULL_NAME }}
+          VIPM_EMAIL: ${{ secrets.VIPM_EMAIL }}
+        run: |
+          source setup-display.sh
+          vipm activate \
+            --serial-number "${VIPM_SERIAL_NUMBER}" \
+            --name "${VIPM_FULL_NAME}" \
+            --email "${VIPM_EMAIL}"
+
       - name: Print VIPM About
         run: vipm about
+
+      - name: Install curl and uv (astral.sh)
+        # curl is required for installing uv (astral.sh), but is not included in the base LabVIEW image.
+        run: |
+          apt-get update && apt-get install -y curl
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+
+      - name: Update VIPM Settings for LabVIEW Save Version
+        run: |
+          echo "Updating VIPM Settings (enable 'VIPB LabVIEW Save Version')"
+          uv run tools/update_vipm_settings.py /usr/local/jki/vipm/Settings.ini
 
       - name: VIPM Refresh Package Index
         # we will refresh before building the package
@@ -174,6 +199,7 @@ jobs:
           echo "Starting LabVIEW"
           /usr/local/natinst/LabVIEW-${LABVIEW_VERSION_YEAR}-64/labview --headless &
 
+          echo "Building VIPM package"
           vipm build source/.vipb --labview-version ${LABVIEW_VERSION_YEAR} --labview-bitness 64 --show-progress --verbose
 
       - name: Upload Built Package as Artifact
@@ -185,10 +211,13 @@ jobs:
             *.vip
 
       - name: Upload VIPM and LabVIEW Settings as Artifacts (debugging)
-        if: false
+        # Always run so we can inspect the final Settings.ini after VIPM's first
+        # run rewrites it (we seed it before install; VIPM may modify on startup).
+        if: always()
         uses: actions/upload-artifact@v7
         with:
           name: vipm-settings-${{ env.LABVIEW_IMAGE }}
           path: |
             /usr/local/jki/vipm/Settings.ini
             /root/natinst/.config/LabVIEW-${LABVIEW_VERSION_YEAR}/labview*
+            /etc/jki/jki.conf
